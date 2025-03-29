@@ -1,0 +1,521 @@
+---
+title: Looping Constructs
+description: Learn how to repeat actions using loops in Python
+---
+
+# Looping Constructs
+
+Loops allow you to execute a block of code multiple times. This is essential for tasks like processing collections of data, repeating actions until a condition is met, or implementing iterative algorithms. Python provides two main types of loops: `for` loops and `while` loops.
+
+## The `for` Loop
+
+The `for` loop in Python is used to iterate over a sequence (such as a list, tuple, string, or range) or other iterable objects.
+
+### Basic Syntax
+
+```python
+for variable in iterable:
+    # Code to execute for each item in the iterable
+```
+
+Example:
+
+```python
+# Iterating over a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+```
+
+This will output:
+```
+apple
+banana
+cherry
+```
+
+### Iterating with `range()`
+
+The `range()` function generates a sequence of numbers, which is commonly used with `for` loops:
+
+```python
+# range(stop): Generates numbers from 0 to stop-1
+for i in range(5):
+    print(i)  # Prints 0, 1, 2, 3, 4
+
+# range(start, stop): Generates numbers from start to stop-1
+for i in range(2, 6):
+    print(i)  # Prints 2, 3, 4, 5
+
+# range(start, stop, step): Generates numbers from start to stop-1 with the given step
+for i in range(1, 10, 2):
+    print(i)  # Prints 1, 3, 5, 7, 9
+
+# Counting down
+for i in range(10, 0, -1):
+    print(i)  # Prints 10, 9, 8, ..., 1
+```
+
+### Iterating Over Strings
+
+Strings are sequences of characters, so you can iterate over them:
+
+```python
+for char in "Python":
+    print(char)
+```
+
+This will output each character on a new line:
+```
+P
+y
+t
+h
+o
+n
+```
+
+### Iterating Over Dictionaries
+
+When iterating over a dictionary, the loop variable takes on the dictionary's keys:
+
+```python
+person = {"name": "Alice", "age": 30, "city": "New York"}
+
+# Iterating over keys (default)
+for key in person:
+    print(key, person[key])
+
+# Explicitly iterating over keys
+for key in person.keys():
+    print(key)
+
+# Iterating over values
+for value in person.values():
+    print(value)
+
+# Iterating over key-value pairs
+for key, value in person.items():
+    print(f"{key}: {value}")
+```
+
+### Nested Loops
+
+You can nest one loop inside another:
+
+```python
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(f"({i}, {j})", end=" ")
+    print()  # Print a newline after each inner loop completes
+```
+
+This will output:
+```
+(1, 1) (1, 2) (1, 3) 
+(2, 1) (2, 2) (2, 3) 
+(3, 1) (3, 2) (3, 3) 
+```
+
+Nested loops are useful for working with multi-dimensional data like matrices or generating combinations.
+
+### Loop with `enumerate()`
+
+The `enumerate()` function adds a counter to an iterable, allowing you to get both the index and value in each iteration:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+```
+
+This will output:
+```
+0: apple
+1: banana
+2: cherry
+```
+
+You can also specify a starting index:
+
+```python
+# Start counting from 1 instead of 0
+for index, fruit in enumerate(fruits, 1):
+    print(f"{index}: {fruit}")
+```
+
+### Loop with `zip()`
+
+The `zip()` function allows you to iterate over multiple sequences in parallel:
+
+```python
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+
+for name, age in zip(names, ages):
+    print(f"{name} is {age} years old")
+```
+
+This will output:
+```
+Alice is 25 years old
+Bob is 30 years old
+Charlie is 35 years old
+```
+
+If the sequences have different lengths, `zip()` will stop at the end of the shortest sequence.
+
+## The `while` Loop
+
+The `while` loop repeats a block of code as long as a specified condition is `True`.
+
+### Basic Syntax
+
+```python
+while condition:
+    # Code to execute while the condition is True
+```
+
+Example:
+
+```python
+count = 1
+while count <= 5:
+    print(count)
+    count += 1  # Don't forget to update the condition variable!
+```
+
+This will output:
+```
+1
+2
+3
+4
+5
+```
+
+### Infinite Loops
+
+If the condition in a `while` loop never becomes `False`, the loop will run indefinitely (an infinite loop):
+
+```python
+# Infinite loop - will run forever unless interrupted
+while True:
+    print("This will print forever...")
+    # To stop an infinite loop in most environments, press Ctrl+C
+```
+
+Infinite loops are sometimes intentional (e.g., in server programs that should run continuously), but they're often the result of a bug. Make sure your `while` loops have a way to terminate.
+
+### `while` with User Input
+
+A common use of `while` loops is to keep asking for user input until a valid response is received:
+
+```python
+while True:
+    response = input("Enter 'yes' or 'no': ").lower()
+    if response in ['yes', 'no']:
+        break
+    print("Invalid input, please try again.")
+
+print(f"You entered: {response}")
+```
+
+### `while` vs. `for`
+
+- Use a `for` loop when you know the number of iterations in advance or when iterating over a collection.
+- Use a `while` loop when you don't know how many iterations you need and want to continue until a condition is met.
+
+```python
+# When to use for loop (known number of iterations)
+for i in range(5):
+    print(i)
+
+# When to use while loop (unknown number of iterations)
+number = 1
+while number < 100:
+    number *= 2
+    print(number)
+```
+
+## Loop Control Statements
+
+Python provides statements to alter the flow of loops:
+
+### `break` Statement
+
+The `break` statement exits the loop immediately, skipping any remaining iterations:
+
+```python
+for i in range(10):
+    if i == 5:
+        break
+    print(i)
+```
+
+This will output:
+```
+0
+1
+2
+3
+4
+```
+
+### `continue` Statement
+
+The `continue` statement skips the current iteration and moves to the next one:
+
+```python
+for i in range(10):
+    if i % 2 == 0:
+        continue  # Skip even numbers
+    print(i)
+```
+
+This will output:
+```
+1
+3
+5
+7
+9
+```
+
+### `else` Clause in Loops
+
+Both `for` and `while` loops can have an optional `else` clause that executes when the loop completes normally (i.e., not terminated by a `break`):
+
+```python
+# For loop with else
+for i in range(5):
+    print(i)
+else:
+    print("Loop completed normally")
+
+# For loop with break and else
+for i in range(5):
+    if i == 3:
+        break
+    print(i)
+else:
+    print("This won't be printed because the loop was exited with break")
+```
+
+The `else` clause in loops is a unique Python feature that can sometimes confuse programmers coming from other languages. Think of it as "execute this if the loop completed without a break."
+
+## Loop Patterns and Techniques
+
+### Accumulator Pattern
+
+A common pattern is to initialize a variable before a loop and update it during each iteration:
+
+```python
+# Sum of numbers from 1 to 10
+total = 0  # Initialize the accumulator
+for i in range(1, 11):
+    total += i  # Update the accumulator
+print(total)  # Prints 55
+```
+
+### Filtering with Loops
+
+You can create a new collection containing only elements that meet certain criteria:
+
+```python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_numbers = []
+
+for num in numbers:
+    if num % 2 == 0:
+        even_numbers.append(num)
+
+print(even_numbers)  # Prints [2, 4, 6, 8, 10]
+```
+
+### Transforming with Loops
+
+You can create a new collection by applying a transformation to each element:
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squares = []
+
+for num in numbers:
+    squares.append(num ** 2)
+
+print(squares)  # Prints [1, 4, 9, 16, 25]
+```
+
+### Finding Elements with Loops
+
+You can use loops to find elements that meet specific criteria:
+
+```python
+numbers = [10, 5, 8, 3, 7]
+max_value = numbers[0]  # Start with the first element
+
+for num in numbers:
+    if num > max_value:
+        max_value = num
+
+print(max_value)  # Prints 10
+```
+
+### Loop with a Flag
+
+Sometimes it's useful to use a boolean variable (a "flag") to keep track of a condition:
+
+```python
+numbers = [1, 2, 3, 4, 5]
+contains_even = False
+
+for num in numbers:
+    if num % 2 == 0:
+        contains_even = True
+        break
+
+if contains_even:
+    print("The list contains at least one even number")
+else:
+    print("The list does not contain any even numbers")
+```
+
+## List Comprehensions
+
+Python provides a concise way to create lists based on existing lists, called list comprehensions. They're a powerful alternative to using loops for creating lists.
+
+### Basic Syntax
+
+```python
+new_list = [expression for item in iterable]
+```
+
+Example:
+
+```python
+# Using a loop to create a list of squares
+squares = []
+for x in range(1, 6):
+    squares.append(x ** 2)
+print(squares)  # [1, 4, 9, 16, 25]
+
+# Using a list comprehension to create the same list
+squares = [x ** 2 for x in range(1, 6)]
+print(squares)  # [1, 4, 9, 16, 25]
+```
+
+### List Comprehensions with Conditions
+
+You can add conditions to list comprehensions:
+
+```python
+# Only include squares of even numbers
+even_squares = [x ** 2 for x in range(1, 11) if x % 2 == 0]
+print(even_squares)  # [4, 16, 36, 64, 100]
+
+# Use an if-else in the expression
+result = ["even" if x % 2 == 0 else "odd" for x in range(1, 6)]
+print(result)  # ['odd', 'even', 'odd', 'even', 'odd']
+```
+
+### Nested List Comprehensions
+
+You can create nested list comprehensions, similar to nested loops:
+
+```python
+# Create a 3×3 matrix
+matrix = [[i * 3 + j + 1 for j in range(3)] for i in range(3)]
+print(matrix)  # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# Flatten a 2D matrix into a 1D list
+flattened = [num for row in matrix for num in row]
+print(flattened)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+While list comprehensions are powerful, they can become difficult to read if they're too complex. In those cases, it's often better to use regular loops for readability.
+
+## Dictionary Comprehensions
+
+Similar to list comprehensions, Python offers dictionary comprehensions to create dictionaries:
+
+```python
+# Create a dictionary of squares
+squares_dict = {x: x**2 for x in range(1, 6)}
+print(squares_dict)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# Create a dictionary with a condition
+even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+print(even_squares)  # {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
+```
+
+## Set Comprehensions
+
+Python also supports set comprehensions for creating sets:
+
+```python
+# Create a set of squares
+squares_set = {x**2 for x in range(1, 6)}
+print(squares_set)  # {1, 4, 9, 16, 25}
+
+# Create a set with a condition
+vowels = {char for char in "hello world" if char in 'aeiou'}
+print(vowels)  # {'e', 'o'}
+```
+
+## Best Practices for Loops
+
+1. **Choose the right loop**: Use `for` loops for iterating over sequences and `while` loops when you need to repeat until a condition is met.
+
+2. **Avoid modifying the iterator variable** inside a `for` loop, as it can lead to unexpected behavior:
+   ```python
+   # Don't do this
+   for i in range(5):
+       i = 10  # This doesn't affect the loop's behavior
+       print(i)  # Still prints 10, 10, 10, 10, 10
+   ```
+
+3. **Be careful when modifying collections** during iteration:
+   ```python
+   # This can cause issues
+   numbers = [1, 2, 3, 4, 5]
+   for num in numbers:
+       if num % 2 == 0:
+           numbers.remove(num)  # Modifying the list while iterating
+   print(numbers)  # Result may be unexpected: [1, 3, 5]
+   
+   # Better approach - create a new list or use a comprehension
+   numbers = [1, 2, 3, 4, 5]
+   odd_numbers = [num for num in numbers if num % 2 != 0]
+   print(odd_numbers)  # [1, 3, 5]
+   ```
+
+4. **Avoid nested loops when possible**, as they can lead to performance issues with large data sets.
+
+5. **Use loop control statements judiciously**, as too many `break` or `continue` statements can make code harder to follow.
+
+6. **Consider using comprehensions** for simple transformations to make your code more concise.
+
+## Next Steps
+
+Loops are essential tools for working with collections and implementing repetitive tasks in programming. Now that you understand the different looping constructs in Python, you'll be able to write more powerful and efficient code.
+
+In the next section, we'll dive deeper into loop control and explore more advanced loop patterns and techniques.
+
+---
+
+## Practice Exercises
+
+1. Write a program that uses a `for` loop to print all even numbers from 2 to 20.
+
+2. Create a program that uses a `while` loop to repeatedly ask the user for a number until they enter a negative number. Then print the sum of all the positive numbers entered.
+
+3. Write a program that prints the first 10 numbers in the Fibonacci sequence (where each number is the sum of the two preceding ones, starting from 0 and 1).
+
+4. Create a program that uses nested loops to print a multiplication table for numbers 1 through 5.
+
+5. Use a list comprehension to create a list containing the squares of all even numbers from 1 to 20.
+
+6. Write a program that iterates through a string and counts the number of vowels (a, e, i, o, u) and consonants.
+
+7. Implement a simple guessing game where the computer randomly selects a number between 1 and 100, and the user tries to guess it. Use a `while` loop to keep prompting the user until they guess correctly. Provide hints like "Too high" or "Too low" after each guess.

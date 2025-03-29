@@ -1,0 +1,374 @@
+---
+title: Comments and Documentation
+description: Learn how to effectively document your Python code using comments and docstrings
+---
+
+# Comments and Documentation
+
+Well-documented code is essential for readability, maintainability, and collaboration. In this section, we'll learn how to effectively document Python code using comments and docstrings.
+
+## Comments in Python
+
+Comments are notes that you add to your code to explain what it does. They are ignored by the Python interpreter.
+
+### Single-Line Comments
+
+In Python, single-line comments start with the `#` character:
+
+```python
+# This is a single-line comment
+x = 10  # This is an inline comment
+```
+
+### Multi-Line Comments
+
+Python doesn't have a dedicated syntax for multi-line comments like some other languages (e.g., `/* */` in C/Java). However, you can use multiple consecutive single-line comments:
+
+```python
+# This is a multi-line comment
+# that spans across multiple
+# lines of code
+```
+
+Or you can use a multi-line string (triple quotes) that isn't assigned to any variable:
+
+```python
+"""
+This is not technically a comment, but an unassigned string literal.
+It behaves like a multi-line comment since it's not assigned to any variable.
+The Python interpreter will ignore it during execution.
+"""
+```
+
+### Effective Commenting Practices
+
+#### Do Comment:
+
+- **Complex algorithms**: Explain the purpose and logic of complex code
+- **Non-obvious solutions**: Clarify why you chose a particular approach
+- **Workarounds**: Document hacks or workarounds for specific issues
+- **Future improvements**: Note areas for future enhancement (using `# TODO: ...`)
+
+```python
+# Calculate the Fibonacci number at position n using dynamic programming
+# This approach has O(n) time complexity, which is more efficient than recursion
+def fibonacci(n):
+    if n <= 1:
+        return n
+    
+    # Initialize the first two Fibonacci numbers
+    fib = [0, 1]
+    
+    # Build up the sequence iteratively
+    for i in range(2, n + 1):
+        fib.append(fib[i-1] + fib[i-2])
+    
+    return fib[n]
+
+# TODO: Add memoization to improve performance for repeated calls
+```
+
+#### Don't Comment:
+
+- **Obvious code**: Don't state what is already clear from the code
+- **Outdated information**: Always update comments when you change code
+- **Dead code**: Delete unused code rather than commenting it out long-term
+
+```python
+# Bad comment example - states the obvious
+x = x + 1  # Increment x by 1
+
+# Better - no comment needed for simple operations
+x = x + 1
+```
+
+## Docstrings
+
+Docstrings are string literals that appear right after the definition of a function, class, or module. Unlike regular comments, docstrings are accessible at runtime via the `__doc__` attribute.
+
+### Module Docstrings
+
+Module docstrings appear at the beginning of a file:
+
+```python
+"""
+Math Utilities Module
+
+This module provides utility functions for common 
+mathematical operations not available in the standard math module.
+"""
+
+import math
+
+# Module code goes here...
+```
+
+### Function Docstrings
+
+Function docstrings describe what a function does, its parameters, and return values:
+
+```python
+def calculate_area(radius):
+    """
+    Calculate the area of a circle.
+    
+    Parameters:
+        radius (float): The radius of the circle
+        
+    Returns:
+        float: The area of the circle
+    
+    Examples:
+        >>> calculate_area(2)
+        12.56637...
+    """
+    return math.pi * radius ** 2
+```
+
+### Class Docstrings
+
+Class docstrings document the class's purpose and behavior:
+
+```python
+class Person:
+    """
+    A class representing a person.
+    
+    Attributes:
+        name (str): The person's name
+        age (int): The person's age
+        address (str, optional): The person's address
+    
+    Methods:
+        greet: Return a greeting message
+        is_adult: Check if the person is an adult
+    """
+    
+    def __init__(self, name, age, address=None):
+        """
+        Initialize a Person object.
+        
+        Parameters:
+            name (str): The person's name
+            age (int): The person's age
+            address (str, optional): The person's address
+        """
+        self.name = name
+        self.age = age
+        self.address = address
+```
+
+## Docstring Styles
+
+There are several common styles for writing docstrings in Python:
+
+### Google Style
+
+```python
+def divide(dividend, divisor):
+    """Divides the dividend by the divisor.
+    
+    Args:
+        dividend (int): The number being divided
+        divisor (int): The number dividing the dividend
+        
+    Returns:
+        float: The quotient of the division
+        
+    Raises:
+        ZeroDivisionError: If divisor is 0
+    
+    Examples:
+        >>> divide(10, 2)
+        5.0
+    """
+    return dividend / divisor
+```
+
+### reStructuredText (Sphinx) Style
+
+```python
+def divide(dividend, divisor):
+    """Divides the dividend by the divisor.
+    
+    :param dividend: The number being divided
+    :type dividend: int
+    :param divisor: The number dividing the dividend
+    :type divisor: int
+    :returns: The quotient of the division
+    :rtype: float
+    :raises ZeroDivisionError: If divisor is 0
+    
+    .. code-block:: python
+    
+        >>> divide(10, 2)
+        5.0
+    """
+    return dividend / divisor
+```
+
+### NumPy/SciPy Style
+
+```python
+def divide(dividend, divisor):
+    """Divides the dividend by the divisor.
+    
+    Parameters
+    ----------
+    dividend : int
+        The number being divided
+    divisor : int
+        The number dividing the dividend
+        
+    Returns
+    -------
+    float
+        The quotient of the division
+        
+    Raises
+    ------
+    ZeroDivisionError
+        If divisor is 0
+    
+    Examples
+    --------
+    >>> divide(10, 2)
+    5.0
+    """
+    return dividend / divisor
+```
+
+## Accessing Docstrings
+
+Docstrings can be accessed programmatically through the `__doc__` attribute or the `help()` function:
+
+```python
+def greet(name):
+    """Return a greeting message for the given name."""
+    return f"Hello, {name}!"
+
+# Access the docstring
+print(greet.__doc__)  # Output: Return a greeting message for the given name.
+
+# Get help information
+help(greet)  # Shows formatted documentation
+```
+
+## Documentation Tools
+
+### Python's Built-in Help System
+
+Python's built-in `help()` function displays documentation for objects:
+
+```python
+help(str)  # Show documentation for the string class
+help(list.append)  # Show documentation for the list.append method
+```
+
+### External Documentation Tools
+
+Several tools can generate documentation from your docstrings:
+
+- **Sphinx**: A powerful documentation generator often used for Python projects
+- **pdoc**: A simple tool for auto-generating API documentation
+- **MkDocs**: Documentation site generator with support for Python docstrings
+- **Pycco**: Generates side-by-side code and documentation
+
+## Type Hints
+
+Python 3.5+ supports type annotations, which can enhance documentation by explicitly stating the expected types:
+
+```python
+def calculate_average(numbers: list[float]) -> float:
+    """
+    Calculate the average of a list of numbers.
+    
+    Parameters:
+        numbers: A list of numbers
+        
+    Returns:
+        The average value
+        
+    Raises:
+        ZeroDivisionError: If the list is empty
+    """
+    return sum(numbers) / len(numbers)
+```
+
+Type hints don't affect how Python runs your code but can be used by:
+- Static type checkers like mypy
+- IDEs for better auto-completion and error detection
+- Documentation generators
+
+## Documentation Best Practices
+
+1. **Write documentation as you code**, not after
+2. **Update documentation when you change code**
+3. **Use consistent style** throughout your project
+4. **Document why, not just what** the code does
+5. **Include examples** demonstrating how to use functions and classes
+6. **Document exceptions** your code might raise
+7. **Keep it concise but complete**
+8. **Use type hints** to clarify expected types
+
+## Code Documentation in Project Development
+
+### Documentation for Personal Projects
+
+Even for personal projects, good documentation helps:
+- Remind yourself how your code works when you return to it later
+- Provide a reference for functions and classes you've created
+- Make it easier to debug issues
+
+### Documentation for Team Projects
+
+For collaborative projects, documentation is crucial for:
+- Onboarding new team members
+- Ensuring consistent understanding of how components work
+- Reducing time spent answering basic questions
+- Maintaining knowledge when team members leave
+
+### Documentation for Open Source Projects
+
+For open source projects, thorough documentation:
+- Makes your project more accessible to new users
+- Reduces support burden by providing clear instructions
+- Encourages contributions by making the codebase more understandable
+
+## Next Steps
+
+Now that you've learned about Python's basic syntax, data types, I/O operations, and documentation practices, you have a solid foundation in Python programming. In the next chapter, we'll explore control flow and looping constructs, which will enable you to create more dynamic and responsive programs.
+
+---
+
+## Practice Exercises
+
+1. Add appropriate comments to the following code to explain what it does:
+   ```python
+   def process_data(data):
+       result = []
+       for item in data:
+           if isinstance(item, (int, float)):
+               result.append(item * 2)
+           elif isinstance(item, str):
+               if item.isdigit():
+                   result.append(int(item) * 2)
+               else:
+                   result.append(item.upper())
+       return result
+   ```
+
+2. Write a well-documented function called `calculate_statistics` that takes a list of numbers and returns a dictionary containing the mean, median, minimum, and maximum values.
+
+3. Create a class called `BankAccount` with appropriate methods and attributes. Use docstrings to document the class, its attributes, and its methods.
+
+4. Examine a Python module from the standard library (e.g., `random`, `math`, `datetime`) and review its documentation. Write down three things you learned from the documentation that you didn't know before.
+
+5. Take a poorly documented function and improve its documentation by adding a clear docstring, type hints, and comments where necessary:
+   ```python
+   def proc(x, y, z=None):
+       if z is None:
+           z = []
+       z.append(x + y)
+       return sum(z) / len(z)
+   ``` 

@@ -1,0 +1,585 @@
+---
+title: Comprehensions
+description: Master Python's powerful comprehension syntax for creating lists, dictionaries, and sets concisely
+---
+
+# Comprehensions
+
+Comprehensions are one of Python's most elegant and powerful features. They provide a concise way to create lists, dictionaries, and sets by transforming and filtering data from existing iterables. In this section, we'll explore the different types of comprehensions, their syntax, common patterns, and best practices.
+
+## List Comprehensions
+
+List comprehensions allow you to create lists in a single line of code, replacing traditional loops and making your code more readable and often more efficient.
+
+### Basic Syntax
+
+The basic syntax of a list comprehension is:
+
+```python
+[expression for item in iterable]
+```
+
+This creates a new list by evaluating the expression for each item in the iterable.
+
+### Simple Examples
+
+```python
+# Create a list of squares
+squares = [x**2 for x in range(1, 11)]
+print(squares)  # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# Create a list of uppercase letters from a string
+letters = [char.upper() for char in 'hello']
+print(letters)  # ['H', 'E', 'L', 'L', 'O']
+
+# Convert a list of strings to integers
+string_numbers = ['1', '2', '3', '4', '5']
+numbers = [int(num) for num in string_numbers]
+print(numbers)  # [1, 2, 3, 4, 5]
+```
+
+### Adding Conditions
+
+List comprehensions can include conditions to filter elements:
+
+```python
+# Syntax with a condition
+[expression for item in iterable if condition]
+```
+
+Examples:
+
+```python
+# Only include even numbers
+even_numbers = [x for x in range(1, 11) if x % 2 == 0]
+print(even_numbers)  # [2, 4, 6, 8, 10]
+
+# Only include words with more than 3 letters
+words = ['the', 'quick', 'brown', 'fox', 'jumps']
+long_words = [word for word in words if len(word) > 3]
+print(long_words)  # ['quick', 'brown', 'jumps']
+
+# Filter out None values
+values = [1, None, 2, None, 3, 4, None]
+valid_values = [x for x in values if x is not None]
+print(valid_values)  # [1, 2, 3, 4]
+```
+
+### Nested List Comprehensions
+
+You can nest list comprehensions for working with multi-dimensional data:
+
+```python
+# Create a matrix (2D list)
+matrix = [[i * j for j in range(1, 4)] for i in range(1, 4)]
+print(matrix)  # [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+
+# Flatten a matrix
+flat = [element for row in matrix for element in row]
+print(flat)  # [1, 2, 3, 2, 4, 6, 3, 6, 9]
+
+# Transpose a matrix (swap rows and columns)
+transposed = [[row[i] for row in matrix] for i in range(len(matrix[0]))]
+print(transposed)  # [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+```
+
+### Conditional Expressions in List Comprehensions
+
+You can use conditional expressions (ternary operators) within list comprehensions:
+
+```python
+# Syntax with conditional expression
+[true_expression if condition else false_expression for item in iterable]
+```
+
+Examples:
+
+```python
+# Replace negative numbers with zero
+numbers = [1, -2, 3, -4, 5, -6]
+replaced = [x if x > 0 else 0 for x in numbers]
+print(replaced)  # [1, 0, 3, 0, 5, 0]
+
+# Categorize numbers as 'even' or 'odd'
+numbers = range(1, 6)
+categorized = ['even' if x % 2 == 0 else 'odd' for x in numbers]
+print(categorized)  # ['odd', 'even', 'odd', 'even', 'odd']
+```
+
+## Dictionary Comprehensions
+
+Dictionary comprehensions allow you to create dictionaries in a similar concise manner.
+
+### Basic Syntax
+
+The basic syntax of a dictionary comprehension is:
+
+```python
+{key_expression: value_expression for item in iterable}
+```
+
+### Simple Examples
+
+```python
+# Create a dictionary of squares
+squares = {x: x**2 for x in range(1, 6)}
+print(squares)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# Create a dictionary from a list
+fruits = ['apple', 'banana', 'cherry']
+fruit_lengths = {fruit: len(fruit) for fruit in fruits}
+print(fruit_lengths)  # {'apple': 5, 'banana': 6, 'cherry': 6}
+
+# Convert keys to uppercase
+original = {'a': 1, 'b': 2, 'c': 3}
+uppercase = {k.upper(): v for k, v in original.items()}
+print(uppercase)  # {'A': 1, 'B': 2, 'C': 3}
+```
+
+### Adding Conditions
+
+Just like list comprehensions, dictionary comprehensions can include conditions:
+
+```python
+# Only include even numbers
+even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+print(even_squares)  # {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
+
+# Filter dictionary entries based on values
+scores = {'Alice': 95, 'Bob': 75, 'Charlie': 82, 'David': 65}
+high_scores = {name: score for name, score in scores.items() if score >= 80}
+print(high_scores)  # {'Alice': 95, 'Charlie': 82}
+```
+
+### Creating Dictionaries from Two Lists
+
+You can use `zip()` with a dictionary comprehension to create dictionaries from pairs of lists:
+
+```python
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+people = {name: age for name, age in zip(names, ages)}
+print(people)  # {'Alice': 25, 'Bob': 30, 'Charlie': 35}
+```
+
+### Swapping Keys and Values
+
+One common use case is swapping keys and values in a dictionary:
+
+```python
+original = {'a': 1, 'b': 2, 'c': 3}
+inverted = {v: k for k, v in original.items()}
+print(inverted)  # {1: 'a', 2: 'b', 3: 'c'}
+```
+
+Note: This only works correctly if the values in the original dictionary are unique and hashable.
+
+## Set Comprehensions
+
+Set comprehensions create sets using similar syntax to list comprehensions.
+
+### Basic Syntax
+
+The basic syntax of a set comprehension is:
+
+```python
+{expression for item in iterable}
+```
+
+### Simple Examples
+
+```python
+# Create a set of squares
+squares = {x**2 for x in range(1, 6)}
+print(squares)  # {1, 4, 9, 16, 25}
+
+# Extract unique letters from a string
+text = "hello world"
+unique_letters = {char for char in text if char.isalpha()}
+print(unique_letters)  # {'e', 'h', 'd', 'l', 'o', 'r', 'w'}
+
+# Create a set of word lengths
+words = ['the', 'quick', 'brown', 'fox']
+lengths = {len(word) for word in words}
+print(lengths)  # {3, 5}
+```
+
+### Adding Conditions
+
+Like other comprehensions, set comprehensions can include conditions:
+
+```python
+# Only include even numbers
+even_squares = {x**2 for x in range(1, 11) if x % 2 == 0}
+print(even_squares)  # {4, 16, 36, 64, 100}
+
+# Create a set of divisors of 100
+divisors = {i for i in range(1, 101) if 100 % i == 0}
+print(divisors)  # {1, 2, 4, 5, 10, 20, 25, 50, 100}
+```
+
+## Generator Expressions
+
+Generator expressions are similar to list comprehensions but create generators instead of lists. They're more memory-efficient because they generate items on-the-fly rather than creating the entire collection at once.
+
+### Basic Syntax
+
+The syntax is the same as list comprehensions, but with parentheses instead of square brackets:
+
+```python
+(expression for item in iterable)
+```
+
+### Simple Examples
+
+```python
+# Create a generator of squares
+squares_gen = (x**2 for x in range(1, 11))
+print(squares_gen)  # <generator object <genexpr> at 0x...>
+
+# Iterate over the generator
+for square in squares_gen:
+    print(square, end=' ')  # 1 4 9 16 25 36 49 64 81 100
+
+# Sum of squares using a generator expression
+squares_sum = sum(x**2 for x in range(1, 11))
+print(squares_sum)  # 385
+
+# Convert a generator to a list if needed
+numbers_gen = (x for x in range(1, 6))
+numbers_list = list(numbers_gen)
+print(numbers_list)  # [1, 2, 3, 4, 5]
+```
+
+### Memory Efficiency
+
+Generator expressions are particularly useful when dealing with large datasets, as they don't store all values in memory at once:
+
+```python
+# Using a list comprehension (stores all values in memory)
+import sys
+squares_list = [x**2 for x in range(10000)]
+print(f"List size: {sys.getsizeof(squares_list)} bytes")  # ~ 87,616 bytes
+
+# Using a generator expression (generates values on-the-fly)
+squares_gen = (x**2 for x in range(10000))
+print(f"Generator size: {sys.getsizeof(squares_gen)} bytes")  # ~ 112 bytes
+
+# The generator is much more memory efficient!
+```
+
+## Common Patterns and Techniques
+
+### Transforming Data
+
+Comprehensions are excellent for transforming data from one form to another:
+
+```python
+# Convert temperatures from Celsius to Fahrenheit
+celsius = [0, 10, 20, 30, 40]
+fahrenheit = [((9/5) * c + 32) for c in celsius]
+print(fahrenheit)  # [32.0, 50.0, 68.0, 86.0, 104.0]
+
+# Extract data from complex structures
+people = [
+    {"name": "Alice", "age": 25},
+    {"name": "Bob", "age": 30},
+    {"name": "Charlie", "age": 35}
+]
+names = [person["name"] for person in people]
+print(names)  # ['Alice', 'Bob', 'Charlie']
+```
+
+### Filtering Data
+
+Comprehensions make it easy to filter data based on conditions:
+
+```python
+# Filter a list
+numbers = list(range(1, 21))
+multiples_of_3 = [x for x in numbers if x % 3 == 0]
+print(multiples_of_3)  # [3, 6, 9, 12, 15, 18]
+
+# Filter a dictionary
+scores = {'Alice': 95, 'Bob': 75, 'Charlie': 82, 'David': 65, 'Eve': 90}
+grades = {name: 'A' if score >= 90 else 'B' if score >= 80 else 'C' if score >= 70 else 'D'
+          for name, score in scores.items()}
+print(grades)  # {'Alice': 'A', 'Bob': 'C', 'Charlie': 'B', 'David': 'D', 'Eve': 'A'}
+```
+
+### Combining Data Sources
+
+Comprehensions can work with multiple data sources:
+
+```python
+# Cross product of two lists
+colors = ['red', 'green', 'blue']
+sizes = ['small', 'medium', 'large']
+products = [(color, size) for color in colors for size in sizes]
+print(products)
+# [('red', 'small'), ('red', 'medium'), ('red', 'large'),
+#  ('green', 'small'), ('green', 'medium'), ('green', 'large'),
+#  ('blue', 'small'), ('blue', 'medium'), ('blue', 'large')]
+
+# Dictionary from two parallel lists
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+name_to_age = {name: age for name, age in zip(names, ages)}
+print(name_to_age)  # {'Alice': 25, 'Bob': 30, 'Charlie': 35}
+```
+
+### Working with Strings
+
+Comprehensions are useful for text processing:
+
+```python
+# Split a text into words and count their lengths
+text = "The quick brown fox jumps over the lazy dog"
+word_lengths = {word: len(word) for word in text.split()}
+print(word_lengths)
+# {'The': 3, 'quick': 5, 'brown': 5, 'fox': 3, 'jumps': 5, 'over': 4, 'the': 3, 'lazy': 4, 'dog': 3}
+
+# Extract all vowels from a text
+vowels = {char for char in text.lower() if char in 'aeiou'}
+print(vowels)  # {'a', 'e', 'i', 'o', 'u'}
+```
+
+### Building Data Structures
+
+Comprehensions are great for constructing complex data structures:
+
+```python
+# Create a lookup table
+ascii_lookup = {chr(i): i for i in range(65, 91)}  # ASCII for A-Z
+print(ascii_lookup)  # {'A': 65, 'B': 66, ..., 'Z': 90}
+
+# Create a matrix
+matrix = [[i * j for j in range(1, 4)] for i in range(1, 4)]
+print(matrix)  # [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+
+# Create a set of tuples
+coordinate_points = {(x, y) for x in range(3) for y in range(3)}
+print(coordinate_points)
+# {(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)}
+```
+
+## Best Practices
+
+### Readability vs. Complexity
+
+Comprehensions should make your code more readable, not less. If a comprehension becomes too complex, it's better to use a traditional loop:
+
+```python
+# Good: Simple and readable comprehension
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+
+# Bad: Overly complex comprehension
+complex_result = [x**2 if x % 2 == 0 else x**3 if x % 3 == 0 else x for x in range(20) if x > 5 and x < 15]
+
+# Better: Use traditional loops for complex logic
+result = []
+for x in range(6, 15):
+    if x % 2 == 0:
+        result.append(x**2)
+    elif x % 3 == 0:
+        result.append(x**3)
+    else:
+        result.append(x)
+```
+
+### Performance Considerations
+
+Comprehensions are generally faster than equivalent for loops, but the difference is often negligible for small data sets:
+
+```python
+# List comprehension vs. for loop
+# For small data sets, the difference is minimal
+# For large data sets, comprehensions are usually faster
+
+import time
+
+# Using a list comprehension
+start = time.time()
+squares1 = [x**2 for x in range(10000)]
+comp_time = time.time() - start
+
+# Using a for loop
+start = time.time()
+squares2 = []
+for x in range(10000):
+    squares2.append(x**2)
+loop_time = time.time() - start
+
+print(f"Comprehension time: {comp_time:.6f} seconds")
+print(f"Loop time: {loop_time:.6f} seconds")
+```
+
+For memory efficiency, prefer generator expressions over list comprehensions when you only need to iterate through the results once:
+
+```python
+# Memory-efficient processing of a large range
+sum_of_squares = sum(x**2 for x in range(1000000))  # Uses minimal memory
+```
+
+### When to Use Each Type of Comprehension
+
+Choose the right type of comprehension based on your needs:
+
+- **List Comprehensions**: When you need an ordered collection that can contain duplicates
+- **Set Comprehensions**: When you need unique elements and don't care about order
+- **Dictionary Comprehensions**: When you need key-value pairs
+- **Generator Expressions**: When you're dealing with large data sets and want to process items one at a time
+
+### Common Mistakes to Avoid
+
+1. **Modifying the iterable within the comprehension**:
+
+```python
+# Wrong: This can lead to unexpected behavior
+numbers = [1, 2, 3, 4, 5]
+[numbers.append(x) for x in numbers]  # Don't do this!
+
+# Better approach
+numbers = [1, 2, 3, 4, 5]
+numbers += [x for x in numbers]  # Creates a new list first
+```
+
+2. **Using comprehensions for side effects**:
+
+```python
+# Wrong: Using a comprehension just for side effects
+[print(x) for x in range(5)]  # Don't do this!
+
+# Better approach
+for x in range(5):
+    print(x)
+```
+
+3. **Creating unnecessarily complex comprehensions**:
+
+```python
+# Too complex for a comprehension
+result = [(x, y, x*y) for x in range(10) if x % 2 == 0
+                       for y in range(10) if y % 3 == 0
+                       if x*y > 10]
+
+# More readable with traditional loops
+result = []
+for x in range(10):
+    if x % 2 != 0:
+        continue
+    for y in range(10):
+        if y % 3 != 0:
+            continue
+        if x*y > 10:
+            result.append((x, y, x*y))
+```
+
+## Practical Examples
+
+### Data Analysis
+
+```python
+# Calculate statistics from data
+data = [
+    {"name": "Alice", "age": 25, "salary": 50000},
+    {"name": "Bob", "age": 30, "salary": 60000},
+    {"name": "Charlie", "age": 35, "salary": 70000},
+    {"name": "David", "age": 40, "salary": 80000},
+    {"name": "Eve", "age": 45, "salary": 90000},
+]
+
+# Extract specific fields
+names = [person["name"] for person in data]
+total_age = sum(person["age"] for person in data)
+average_salary = sum(person["salary"] for person in data) / len(data)
+
+print(f"Names: {names}")
+print(f"Total age: {total_age}")
+print(f"Average salary: ${average_salary:.2f}")
+
+# Group by age bracket
+age_brackets = {
+    "20s": [p["name"] for p in data if 20 <= p["age"] < 30],
+    "30s": [p["name"] for p in data if 30 <= p["age"] < 40],
+    "40s": [p["name"] for p in data if 40 <= p["age"] < 50],
+}
+print(f"Age brackets: {age_brackets}")
+```
+
+### Text Processing
+
+```python
+# Analyze a text
+text = """
+Python is a high-level, general-purpose programming language. 
+Its design philosophy emphasizes code readability with the use of significant indentation.
+Python is dynamically-typed and garbage-collected.
+It supports multiple programming paradigms, including structured, object-oriented, and functional programming.
+"""
+
+# Count word frequencies
+words = text.lower().split()
+word_frequencies = {word: words.count(word) for word in set(words)}
+print("Top 5 most common words:")
+for word, count in sorted(word_frequencies.items(), key=lambda x: x[1], reverse=True)[:5]:
+    print(f"  {word}: {count}")
+
+# Find all words containing a specific letter
+words_with_z = {word for word in set(words) if 'z' in word}
+print(f"Words containing 'z': {words_with_z}")
+
+# Create a dictionary mapping words to their first letter
+first_letter_map = {word: word[0] for word in set(words) if word}
+print(f"First letter map (sample): {dict(list(first_letter_map.items())[:5])}")
+```
+
+### Working with Files
+
+```python
+import os
+
+# List all Python files in a directory
+python_files = [f for f in os.listdir('.') if f.endswith('.py')]
+print(f"Python files: {python_files}")
+
+# Create a dictionary mapping file names to their sizes
+file_sizes = {f: os.path.getsize(f) for f in os.listdir('.') if os.path.isfile(f)}
+print(f"File sizes (bytes): {file_sizes}")
+
+# Find all directories
+directories = [d for d in os.listdir('.') if os.path.isdir(d)]
+print(f"Directories: {directories}")
+```
+
+## Practice Exercises
+
+1. Write a list comprehension that creates a list of tuples (number, square, cube) for numbers from 1 to 10.
+
+2. Create a dictionary comprehension that maps each word in a sentence to the number of vowels it contains.
+
+3. Use a set comprehension to find all numbers from 1 to 100 that are divisible by both 2 and 3.
+
+4. Write a nested list comprehension to create a multiplication table (a list of lists) for numbers 1 through 5.
+
+5. Create a dictionary comprehension that groups words from a list by their length.
+
+6. Use a generator expression to calculate the sum of squares of all odd numbers from 1 to 100.
+
+7. Create a comprehension that filters out all vowels from a string and returns the remaining characters as a new string.
+
+## Summary
+
+Comprehensions are a powerful and elegant feature of Python that allow you to create lists, dictionaries, and sets in a concise and readable way. They're particularly useful for transforming, filtering, and combining data from existing collections.
+
+Key points to remember:
+
+- List comprehensions create lists: `[expression for item in iterable if condition]`
+- Dictionary comprehensions create dictionaries: `{key: value for item in iterable if condition}`
+- Set comprehensions create sets: `{expression for item in iterable if condition}`
+- Generator expressions create generators: `(expression for item in iterable if condition)`
+- Comprehensions are generally more concise and faster than equivalent for loops
+- Use generator expressions for memory efficiency when dealing with large data sets
+- Keep comprehensions simple and readable – if they become too complex, use traditional loops
+
+In the next section, we'll explore advanced data structure techniques, including combining different data structures and solving common problems with the right data structures. 

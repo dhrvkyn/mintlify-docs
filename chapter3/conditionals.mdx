@@ -1,0 +1,416 @@
+---
+title: Conditional Statements
+description: Learn how to control program flow with conditional statements in Python
+---
+
+# Conditional Statements
+
+Conditional statements allow your programs to make decisions and execute different code based on different conditions. In this section, we'll explore how to use conditional statements to control the flow of your Python programs.
+
+## The `if` Statement
+
+The `if` statement is the most basic form of conditional execution in Python. It executes a block of code only if a specified condition is true.
+
+### Basic Syntax
+
+```python
+if condition:
+    # Code to execute if the condition is True
+```
+
+For example:
+
+```python
+temperature = 28
+
+if temperature > 25:
+    print("It's a warm day!")
+```
+
+In this example, the message will only be printed if the temperature is greater than 25.
+
+### Condition Evaluation
+
+In Python, conditions are expressions that evaluate to a Boolean value (`True` or `False`). Python evaluates the following values as `False`:
+
+- `False`
+- `None`
+- Zero of any numeric type (`0`, `0.0`, `0j`)
+- Empty sequences and collections (`''`, `[]`, `()`, `{}`, `set()`, `range(0)`)
+
+All other values are considered `True`.
+
+```python
+# These conditions all evaluate to False
+if False:
+    print("This won't print")
+    
+if None:
+    print("This won't print")
+    
+if 0:
+    print("This won't print")
+    
+if "":
+    print("This won't print")
+    
+if []:
+    print("This won't print")
+
+# These conditions all evaluate to True
+if True:
+    print("This will print")
+    
+if 42:
+    print("This will print")
+    
+if "Hello":
+    print("This will print")
+    
+if [1, 2, 3]:
+    print("This will print")
+```
+
+### Comparison Operators
+
+Common comparison operators used in conditions:
+
+| Operator | Description              | Example     |
+|----------|--------------------------|-------------|
+| `==`     | Equal to                 | `a == b`    |
+| `!=`     | Not equal to             | `a != b`    |
+| `>`      | Greater than             | `a > b`     |
+| `<`      | Less than                | `a < b`     |
+| `>=`     | Greater than or equal to | `a >= b`    |
+| `<=`     | Less than or equal to    | `a <= b`    |
+| `is`     | Object identity          | `a is b`    |
+| `is not` | Negated object identity  | `a is not b`|
+
+Examples:
+
+```python
+age = 25
+minimum_age = 18
+
+if age >= minimum_age:
+    print("You are old enough")
+
+name = "Alice"
+if name == "Alice":
+    print("Hello, Alice!")
+
+# Be careful with 'is' vs '=='
+# 'is' checks if objects are the same object in memory
+# '==' checks if objects have the same value
+a = [1, 2, 3]
+b = [1, 2, 3]
+c = a
+
+print(a == b)  # True (same values)
+print(a is b)  # False (different objects)
+print(a is c)  # True (same object)
+```
+
+### Logical Operators
+
+Python provides logical operators to combine conditions:
+
+| Operator | Description              | Example           |
+|----------|--------------------------|-------------------|
+| `and`    | True if both are true    | `a > 0 and b > 0` |
+| `or`     | True if at least one is true | `a > 0 or b > 0`  |
+| `not`    | True if condition is false | `not a > 0`     |
+
+Examples:
+
+```python
+age = 25
+income = 50000
+
+# Using 'and' - both conditions must be True
+if age > 18 and income > 30000:
+    print("You qualify for a loan")
+
+# Using 'or' - at least one condition must be True
+if age > 65 or income < 20000:
+    print("You may qualify for assistance")
+
+# Using 'not' - inverts the condition
+if not age < 18:
+    print("You are an adult")
+```
+
+### Short-Circuit Evaluation
+
+Python uses short-circuit evaluation for logical operators:
+- For `and`, if the first operand is `False`, the second is not evaluated
+- For `or`, if the first operand is `True`, the second is not evaluated
+
+This can be useful for efficiency and preventing errors:
+
+```python
+# Short-circuit with 'and'
+# The second condition is not checked if the first is False
+if x != 0 and y / x > 2:
+    print("y/x is greater than 2")
+
+# Short-circuit with 'or'
+# The second condition is not checked if the first is True
+if is_admin or has_permission("edit"):
+    print("Access granted")
+```
+
+## The `else` Statement
+
+The `else` statement provides an alternative block of code to execute when the `if` condition is `False`.
+
+### Basic Syntax
+
+```python
+if condition:
+    # Code to execute if the condition is True
+else:
+    # Code to execute if the condition is False
+```
+
+Example:
+
+```python
+temperature = 15
+
+if temperature > 25:
+    print("It's a warm day!")
+else:
+    print("It's not a warm day")
+```
+
+## The `elif` Statement
+
+The `elif` (short for "else if") statement allows you to check multiple conditions sequentially.
+
+### Basic Syntax
+
+```python
+if condition1:
+    # Code to execute if condition1 is True
+elif condition2:
+    # Code to execute if condition1 is False and condition2 is True
+elif condition3:
+    # Code to execute if condition1 and condition2 are False and condition3 is True
+else:
+    # Code to execute if all conditions are False
+```
+
+Example:
+
+```python
+temperature = 15
+
+if temperature > 30:
+    print("It's hot!")
+elif temperature > 20:
+    print("It's warm")
+elif temperature > 10:
+    print("It's cool")
+else:
+    print("It's cold!")
+```
+
+In this example, only one message will be printed based on the first condition that is `True`. If the temperature is 15, "It's cool" will be printed.
+
+### Multiple `elif` Statements
+
+You can have as many `elif` blocks as needed:
+
+```python
+score = 85
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+
+print(f"Your grade is {grade}")
+```
+
+## Nested Conditional Statements
+
+Conditional statements can be nested inside other conditional statements:
+
+```python
+temperature = 28
+humidity = 65
+
+if temperature > 25:
+    print("It's warm")
+    if humidity > 60:
+        print("And it's humid")
+    else:
+        print("But it's not humid")
+else:
+    print("It's not warm")
+```
+
+While nesting is sometimes necessary, excessive nesting can make code harder to read and maintain. Consider refactoring deeply nested conditions.
+
+## The Conditional Expression (Ternary Operator)
+
+Python provides a compact way to write simple if-else statements using the conditional expression (also known as the ternary operator):
+
+```python
+# Syntax: value_if_true if condition else value_if_false
+```
+
+Example:
+
+```python
+# Traditional if-else
+if age >= 18:
+    status = "adult"
+else:
+    status = "minor"
+
+# Using conditional expression
+status = "adult" if age >= 18 else "minor"
+```
+
+Conditional expressions can make code more concise but should be used judiciously. For complex conditions or multiple branches, traditional if-elif-else statements are more readable.
+
+## Combining Conditions
+
+### Complex Conditions
+
+You can create complex conditions by combining multiple comparison operations:
+
+```python
+# Check if a number is within a range
+if 0 <= x <= 100:
+    print("x is between 0 and 100 inclusive")
+
+# This is equivalent to:
+if x >= 0 and x <= 100:
+    print("x is between 0 and 100 inclusive")
+```
+
+### Using Parentheses for Clarity
+
+When combining logical operators, use parentheses to make the order of operations clear:
+
+```python
+# Without parentheses (may be confusing)
+if a > b or c > d and e > f:
+    # This is interpreted as: if (a > b) or ((c > d) and (e > f))
+    print("Condition met")
+
+# With parentheses (clearer)
+if (a > b) or ((c > d) and (e > f)):
+    print("Condition met")
+```
+
+## The `pass` Statement
+
+Sometimes you need a conditional block that doesn't do anything yet, perhaps as a placeholder for code to be written later. The `pass` statement does nothing but can serve as a placeholder:
+
+```python
+if temperature > 100:
+    # TODO: Implement high temperature warning
+    pass
+else:
+    print("Temperature is normal")
+```
+
+## Checking for Membership with `in`
+
+The `in` operator checks if a value exists in a sequence (like strings, lists, or tuples):
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+if "apple" in fruits:
+    print("We have apples!")
+
+name = "Alice"
+if "ic" in name:
+    print("Name contains 'ic'")
+```
+
+## Best Practices
+
+1. **Be explicit in conditions**: Make conditions as clear as possible.
+
+2. **Use positive conditions when possible**: They're often easier to understand.
+   ```python
+   # Less clear
+   if not is_invalid:
+       process_data()
+       
+   # More clear
+   if is_valid:
+       process_data()
+   ```
+
+3. **Watch for common pitfalls**:
+   - Using `=` (assignment) instead of `==` (comparison)
+   - Confusing `is` with `==`
+   - Not considering all possible cases
+
+4. **Avoid deeply nested conditions**: Consider refactoring or using early returns.
+   ```python
+   # Highly nested (harder to read)
+   def check_eligibility(age, income, credit_score):
+       if age >= 18:
+           if income > 30000:
+               if credit_score > 700:
+                   return "Eligible"
+               else:
+                   return "Ineligible: Low credit score"
+           else:
+               return "Ineligible: Low income"
+       else:
+           return "Ineligible: Too young"
+   
+   # With early returns (easier to read)
+   def check_eligibility(age, income, credit_score):
+       if age < 18:
+           return "Ineligible: Too young"
+       if income <= 30000:
+           return "Ineligible: Low income"
+       if credit_score <= 700:
+           return "Ineligible: Low credit score"
+       return "Eligible"
+   ```
+
+## Next Steps
+
+Conditional statements are the foundation of decision-making in programming. Now that you understand how to use them, you'll be able to write programs that respond to different conditions and make decisions accordingly.
+
+In the next section, we'll explore looping constructs, which allow you to repeat operations and process collections of data efficiently.
+
+---
+
+## Practice Exercises
+
+1. Write a program that asks the user for a number and prints whether it's positive, negative, or zero.
+
+2. Create a program that asks for a user's age and prints a message based on the following conditions:
+   - If age is less than 13, print "Child"
+   - If age is between 13 and 19 (inclusive), print "Teenager"
+   - If age is between 20 and 64, print "Adult"
+   - If age is 65 or older, print "Senior"
+
+3. Write a program that asks the user for their exam score (0-100) and converts it to a letter grade according to the following scale:
+   - 90-100: A
+   - 80-89: B
+   - 70-79: C
+   - 60-69: D
+   - Below 60: F
+
+4. Create a simple authentication system that asks for a username and password. Set a correct username and password in your code, then check if the user's input matches. If both match, print "Access granted"; otherwise, print an appropriate error message.
+
+5. Write a program that checks if a year (input by the user) is a leap year. A leap year is divisible by 4, except for years divisible by 100 but not by 400. For example, 2000 and 2400 are leap years, while 1800, 1900, and 2100 are not. 

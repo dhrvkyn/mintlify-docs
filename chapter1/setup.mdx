@@ -1,0 +1,208 @@
+---
+title: Setting Up Your Environment
+description: Install Python and set up your development environment
+---
+
+# Setting Up Your Environment
+
+Before you can start writing Python code, you need to set up your development environment. This involves installing Python, choosing a code editor or IDE, and learning how to run Python programs.
+
+## Installing Python
+
+Python needs to be installed on your computer before you can use it. The installation process varies by operating system.
+
+### Windows
+
+1. **Download Python**: 
+   - Visit the [official Python website](https://www.python.org/downloads/)
+   - Click on the "Download Python" button (latest version recommended)
+   
+2. **Run the installer**:
+   - Check the box that says "Add Python to PATH" (very important!)
+   - Choose "Customize installation" (recommended)
+   - Ensure that "pip" is selected for installation
+   - Complete the installation process
+
+3. **Verify installation**:
+   - Open Command Prompt (search for "cmd" in the Start menu)
+   - Type `python --version` and press Enter
+   - You should see the Python version number displayed
+
+### macOS
+
+macOS often comes with Python pre-installed, but it's usually an older version.
+
+1. **Download Python**:
+   - Visit the [official Python website](https://www.python.org/downloads/)
+   - Download the macOS installer
+
+2. **Run the installer**:
+   - Open the downloaded .pkg file
+   - Follow the installation instructions
+
+3. **Verify installation**:
+   - Open Terminal (Applications > Utilities > Terminal)
+   - Type `python3 --version` and press Enter
+   - You should see the Python version number displayed
+
+### Linux
+
+Most Linux distributions come with Python pre-installed. However, you may want to ensure you have the latest version.
+
+1. **Install Python**:
+   - For Ubuntu/Debian: 
+     ```bash
+     sudo apt update
+     sudo apt install python3 python3-pip
+     ```
+   - For Fedora:
+     ```bash
+     sudo dnf install python3 python3-pip
+     ```
+
+2. **Verify installation**:
+   - Open Terminal
+   - Type `python3 --version` and press Enter
+   - You should see the Python version number displayed
+
+## Choosing a Code Editor or IDE
+
+While you can write Python code in any text editor, using a dedicated code editor or Integrated Development Environment (IDE) will make your coding experience much more productive.
+
+### Beginner-Friendly Options
+
+1. **Visual Studio Code**:
+   - Free, open-source editor from Microsoft
+   - Lightweight yet powerful
+   - Extensive plugin support, including excellent Python integration
+   - Available for Windows, macOS, and Linux
+   - [Download Visual Studio Code](https://code.visualstudio.com/)
+
+2. **PyCharm Community Edition**:
+   - Free, powerful IDE specifically for Python
+   - Includes code completion, debugging, and testing support
+   - Available for Windows, macOS, and Linux
+   - [Download PyCharm](https://www.jetbrains.com/pycharm/download/)
+
+3. **Thonny**:
+   - Python IDE designed for beginners
+   - Simple interface with built-in debugger
+   - Comes bundled with Python
+   - [Download Thonny](https://thonny.org/)
+
+### Online Options (No Installation Required)
+
+If you can't install software on your computer, these online options work well:
+
+1. **Google Colab**:
+   - Free online notebook environment
+   - No setup required
+   - Supports data science libraries
+   - [Google Colab](https://colab.research.google.com/)
+
+2. **Replit**:
+   - Online coding environment
+   - Create, run, and share Python code
+   - [Replit](https://replit.com/)
+
+## Using the Python Interpreter
+
+Python can be used in two main ways: interactive mode and script mode.
+
+### Interactive Mode (REPL)
+
+The Python interpreter can be used interactively, which is great for testing small code snippets and learning the language.
+
+1. **Open a terminal or command prompt**
+2. **Type `python` (or `python3` on macOS/Linux) and press Enter**
+3. **You'll see the Python prompt (`>>>`) where you can type Python commands:**
+
+```python
+>>> print("Hello, Python Mastery!")
+Hello, Python Mastery!
+>>> 2 + 3
+5
+>>> name = "Python Learner"
+>>> print(f"Welcome, {name}!")
+Welcome, Python Learner!
+```
+
+4. **To exit the interpreter, type `exit()` or press Ctrl+Z (Windows) or Ctrl+D (macOS/Linux)**
+
+REPL stands for Read-Eval-Print Loop:
+- **Read**: It reads the command you enter
+- **Eval**: It evaluates/executes the command
+- **Print**: It prints the result
+- **Loop**: It returns to the prompt, ready for the next command
+
+### Script Mode
+
+For larger programs, you'll want to write your code in a file and then execute it.
+
+1. **Create a new file with a `.py` extension** (e.g., `hello.py`)
+2. **Write your Python code in the file**:
+
+```python
+# This is my first Python script
+print("Hello, Python Mastery!")
+name = "Python Learner"
+print(f"Welcome, {name}!")
+```
+
+3. **Run the script**:
+   - From the command line: `python hello.py`
+   - From your IDE/editor: Most have a "Run" button or shortcut (often F5)
+
+## Writing Your First Python Program
+
+Let's create a simple program that asks for your name and responds with a greeting.
+
+1. **Open your chosen editor or IDE**
+2. **Create a new file called `first_program.py`**
+3. **Add the following code**:
+
+```python
+# My first Python program
+print("Welcome to Python Mastery!")
+
+# Get user input
+name = input("What is your name? ")
+
+# Display personalized greeting
+print(f"Hello, {name}! It's nice to meet you.")
+print("You've just written your first Python program!")
+```
+
+4. **Save the file**
+5. **Run the program** as described above
+6. **Interact with your program** by entering your name when prompted
+
+## Virtual Environments
+
+As you progress with Python, you'll want to use virtual environments to manage dependencies for different projects.
+
+### What Are Virtual Environments?
+
+Virtual environments are isolated Python environments that allow you to install packages for specific projects without affecting your global Python installation.
+
+### Why Use Virtual Environments?
+
+- **Isolation**: Different projects may require different versions of the same package
+- **Dependency management**: Makes it easier to track and install required packages
+- **Portability**: Helps ensure your code works the same way on different machines
+
+We'll explore virtual environments in more detail in the next section on the Python Ecosystem.
+
+## Next Steps
+
+Now that you have Python installed and your environment set up, you're ready to start writing Python code. In the next section, we'll explore the Python ecosystem, including package management with pip and virtual environments.
+
+---
+
+## Practice Exercises
+
+1. Install Python on your computer and verify the installation by checking the version number.
+2. Install a code editor or IDE of your choice.
+3. Write and run a simple Python script that prints "Hello, World!" to the console.
+4. Using the Python interactive mode (REPL), perform a few simple calculations (addition, subtraction, multiplication, division).
+5. Modify the "first program" example to also ask for the user's age and favorite color, then include these in the output message. 

@@ -1,0 +1,533 @@
+---
+title: Sets
+description: Master Python's set data structure for unique collections and mathematical set operations
+---
+
+# Sets
+
+Sets are an unordered collection of unique elements in Python. They're implemented using hash tables (similar to dictionaries) and are optimized for membership testing, eliminating duplicates, and performing mathematical set operations such as unions and intersections. If you need to store a collection of items where uniqueness matters more than order or position, sets are an excellent choice.
+
+## Set Basics
+
+### Creating Sets
+
+Python provides several ways to create sets:
+
+```python
+# Empty set (note: {} creates an empty dictionary, not a set)
+empty_set = set()
+
+# Set with initial elements
+fruits = {"apple", "banana", "cherry"}
+
+# Creating a set from another iterable
+letters = set("hello")  # {'h', 'e', 'l', 'o'} (note that duplicates are removed)
+numbers = set([1, 2, 2, 3, 4, 4, 5])  # {1, 2, 3, 4, 5}
+
+# Set comprehension
+even_squares = {x**2 for x in range(10) if x % 2 == 0}  # {0, 4, 16, 36, 64}
+```
+
+### Set Properties
+
+Sets have several important properties:
+
+1. **Unordered**: Sets don't maintain insertion order, and the order of elements can change
+2. **Unique Elements**: Sets automatically eliminate duplicates
+3. **Mutable**: You can add or remove elements after creation (unlike frozensets, which are immutable)
+4. **Hashable Elements Only**: Set elements must be immutable and hashable (like strings, numbers, tuples, but not lists or dictionaries)
+
+### Basic Set Operations
+
+Sets support several operations for adding, removing, and testing membership:
+
+```python
+fruits = {"apple", "banana", "cherry"}
+
+# Adding elements
+fruits.add("date")  # {"apple", "banana", "cherry", "date"}
+fruits.update(["elderberry", "fig"])  # Add multiple elements
+
+# Removing elements
+fruits.remove("banana")  # Raises KeyError if the element doesn't exist
+fruits.discard("grape")  # No error if the element doesn't exist
+popped = fruits.pop()    # Remove and return an arbitrary element
+fruits.clear()           # Remove all elements
+
+# Membership testing
+fruits = {"apple", "banana", "cherry"}
+has_apple = "apple" in fruits  # True
+has_grape = "grape" in fruits  # False
+```
+
+## Mathematical Set Operations
+
+Sets shine when performing mathematical set operations. Python provides both operators and methods for these operations:
+
+### Union
+
+The union of two sets contains all elements from both sets:
+
+```python
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+
+# Using the | operator
+union = A | B  # {1, 2, 3, 4, 5, 6}
+
+# Using the union() method
+union = A.union(B)  # {1, 2, 3, 4, 5, 6}
+
+# Union of multiple sets
+C = {5, 6, 7, 8}
+multi_union = A | B | C  # {1, 2, 3, 4, 5, 6, 7, 8}
+multi_union_alt = A.union(B, C)  # {1, 2, 3, 4, 5, 6, 7, 8}
+```
+
+### Intersection
+
+The intersection of two sets contains only elements common to both sets:
+
+```python
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+
+# Using the & operator
+intersection = A & B  # {3, 4}
+
+# Using the intersection() method
+intersection = A.intersection(B)  # {3, 4}
+
+# Intersection of multiple sets
+C = {4, 5, 6, 7}
+multi_intersection = A & B & C  # {4}
+multi_intersection_alt = A.intersection(B, C)  # {4}
+```
+
+### Difference
+
+The difference between two sets contains elements in the first set but not in the second:
+
+```python
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+
+# Using the - operator
+difference = A - B  # {1, 2}
+
+# Using the difference() method
+difference = A.difference(B)  # {1, 2}
+
+# Difference with multiple sets
+C = {2, 3, 7}
+multi_diff = A - B - C  # {1}
+multi_diff_alt = A.difference(B, C)  # {1}
+```
+
+### Symmetric Difference
+
+The symmetric difference of two sets contains elements in either set, but not in their intersection:
+
+```python
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+
+# Using the ^ operator
+sym_diff = A ^ B  # {1, 2, 5, 6}
+
+# Using the symmetric_difference() method
+sym_diff = A.symmetric_difference(B)  # {1, 2, 5, 6}
+```
+
+### Subset and Superset Relations
+
+Sets can be compared to check if one is a subset or superset of another:
+
+```python
+A = {1, 2, 3}
+B = {1, 2, 3, 4, 5}
+
+# Check if A is a subset of B
+is_subset = A <= B  # True
+is_subset = A.issubset(B)  # True
+
+# Check if A is a proper subset of B (A ⊂ B, A is a subset but not equal to B)
+is_proper_subset = A < B  # True
+
+# Check if B is a superset of A
+is_superset = B >= A  # True
+is_superset = B.issuperset(A)  # True
+
+# Check if B is a proper superset of A (B ⊃ A, B is a superset but not equal to A)
+is_proper_superset = B > A  # True
+```
+
+### Disjoint Sets
+
+Sets are disjoint if they have no elements in common:
+
+```python
+A = {1, 2, 3}
+B = {4, 5, 6}
+C = {3, 4, 5}
+
+are_disjoint = A.isdisjoint(B)  # True (no common elements)
+are_disjoint = A.isdisjoint(C)  # False (3 is common)
+```
+
+## Set Comprehensions
+
+Like list and dictionary comprehensions, Python also supports set comprehensions for creating sets concisely:
+
+```python
+# Basic set comprehension
+squares = {x**2 for x in range(10)}  # {0, 1, 4, 9, 16, 25, 36, 49, 64, 81}
+
+# Set comprehension with condition
+even_squares = {x**2 for x in range(10) if x % 2 == 0}  # {0, 4, 16, 36, 64}
+
+# Converting a list with duplicates to a set of unique values
+numbers = [1, 2, 2, 3, 3, 3, 4, 4, 5]
+unique_numbers = {x for x in numbers}  # {1, 2, 3, 4, 5}
+
+# Set of word lengths in a sentence
+words = "the quick brown fox jumps over the lazy dog".split()
+word_lengths = {len(word) for word in words}  # {3, 4, 5}
+```
+
+## Frozen Sets
+
+Python also provides an immutable version of sets called `frozenset`. Once created, you cannot add, remove, or modify the elements of a frozenset:
+
+```python
+# Creating a frozenset
+immutable = frozenset([1, 2, 3, 4])
+
+# These operations would raise TypeError:
+# immutable.add(5)
+# immutable.remove(1)
+# immutable.clear()
+
+# Frozensets can be used as dictionary keys or elements of another set
+fs1 = frozenset([1, 2, 3])
+fs2 = frozenset([3, 4, 5])
+set_of_frozensets = {fs1, fs2}
+dict_with_frozensets = {fs1: "set1", fs2: "set2"}
+```
+
+## Common Set Patterns and Techniques
+
+### Eliminating Duplicates
+
+One of the most common uses of sets is to remove duplicates from a collection:
+
+```python
+# Removing duplicates from a list
+numbers = [1, 2, 2, 3, 4, 4, 5, 5, 5]
+unique_numbers = list(set(numbers))  # [1, 2, 3, 4, 5]
+# Note: This loses the original order. If order matters, see the "Preserving Order" section below.
+```
+
+### Finding Unique Items
+
+Sets make it easy to find unique elements and common elements between collections:
+
+```python
+list1 = ["apple", "banana", "cherry", "date"]
+list2 = ["banana", "date", "elderberry", "fig"]
+
+# Unique to list1
+only_in_list1 = set(list1) - set(list2)  # {"apple", "cherry"}
+
+# Unique to list2
+only_in_list2 = set(list2) - set(list1)  # {"elderberry", "fig"}
+
+# Common to both
+common = set(list1) & set(list2)  # {"banana", "date"}
+
+# In either list but not in both
+symmetric_diff = set(list1) ^ set(list2)  # {"apple", "cherry", "elderberry", "fig"}
+```
+
+### Preserving Order with Ordered Sets
+
+Standard sets in Python don't preserve insertion order. If you need to both eliminate duplicates and maintain order, there are a few approaches:
+
+```python
+# Using a dictionary (Python 3.7+)
+def ordered_unique(sequence):
+    return list(dict.fromkeys(sequence))
+
+numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
+unique_ordered = ordered_unique(numbers)  # [3, 1, 4, 5, 9, 2, 6]
+
+# For earlier Python versions, you can use an OrderedDict
+from collections import OrderedDict
+
+def ordered_unique_legacy(sequence):
+    return list(OrderedDict.fromkeys(sequence))
+```
+
+### Set Operations on Lists and Other Iterables
+
+Set methods can be used directly with other iterables, not just sets:
+
+```python
+list1 = [1, 2, 3, 4]
+list2 = [3, 4, 5, 6]
+tuple1 = (2, 3, 7)
+
+# Union of lists
+union = set(list1).union(list2, tuple1)  # {1, 2, 3, 4, 5, 6, 7}
+
+# Intersection of lists and tuple
+intersection = set(list1).intersection(list2, tuple1)  # {3}
+```
+
+### Efficient Membership Testing
+
+Sets provide O(1) average time complexity for membership testing, much faster than lists (O(n)):
+
+```python
+# Slow for large collections
+def contains_duplicate_list(items):
+    for i, item in enumerate(items):
+        if item in items[:i]:  # O(n) for each check
+            return True
+    return False
+
+# Fast for large collections
+def contains_duplicate_set(items):
+    seen = set()
+    for item in items:
+        if item in seen:  # O(1) for each check
+            return True
+        seen.add(item)
+    return False
+```
+
+### Set Cover Problem
+
+Sets can help solve the "set cover problem," where you need to find the smallest collection of sets that covers all elements:
+
+```python
+def greedy_set_cover(universe, subsets):
+    """
+    Find a greedy approximation of the smallest collection of subsets that covers the universe.
+    
+    Args:
+        universe: Set of all elements to cover
+        subsets: List of sets, each a subset of the universe
+        
+    Returns:
+        List of indices of subsets in the cover
+    """
+    elements_remaining = set(universe)
+    cover = []
+    
+    while elements_remaining:
+        # Find the subset with the most uncovered elements
+        best_subset_index = max(
+            range(len(subsets)),
+            key=lambda i: len(subsets[i] & elements_remaining),
+            default=None
+        )
+        
+        # If no subset covers any remaining elements, we can't cover everything
+        if best_subset_index is None:
+            break
+            
+        # Add the best subset to our cover and remove its elements from remaining
+        cover.append(best_subset_index)
+        elements_remaining -= subsets[best_subset_index]
+        
+    return cover
+
+# Example usage
+universe = {1, 2, 3, 4, 5}
+subsets = [{1, 2}, {2, 3, 4}, {4, 5}]
+cover_indices = greedy_set_cover(universe, subsets)
+cover = [subsets[i] for i in cover_indices]
+print(cover)  # [{2, 3, 4}, {1, 2}, {4, 5}]
+```
+
+## Performance Considerations
+
+Sets are highly optimized for membership testing, adding, and removing operations:
+
+- Membership testing (`x in s`) is O(1) on average, compared to O(n) for lists
+- Adding elements (`s.add(x)`) is O(1) on average
+- Removing elements (`s.remove(x)`) is O(1) on average
+- Set operations like union and intersection are O(len(s) + len(t)) on average
+
+This makes sets much more efficient than lists for these operations, especially with large collections.
+
+```python
+# Timing comparison of membership testing
+import time
+
+def time_membership_test(collection_type, size):
+    if collection_type == "list":
+        collection = list(range(size))
+    else:  # set
+        collection = set(range(size))
+    
+    start = time.time()
+    for i in range(1000):
+        # Test membership of a value not in the collection
+        _ = size + 1 in collection
+    end = time.time()
+    
+    return end - start
+
+size = 100000
+list_time = time_membership_test("list", size)
+set_time = time_membership_test("set", size)
+
+print(f"List membership test: {list_time:.6f} seconds")
+print(f"Set membership test: {set_time:.6f} seconds")
+print(f"Sets are approximately {list_time/set_time:.1f}x faster")
+```
+
+## Practical Applications of Sets
+
+### Removing Duplicates from Customer Data
+
+```python
+# Customer emails with potential duplicates
+emails = [
+    "alice@example.com",
+    "bob@example.com",
+    "alice@example.com",  # Duplicate
+    "charlie@example.com",
+    "david@example.com",
+    "bob@example.com"  # Duplicate
+]
+
+# Get unique emails
+unique_emails = set(emails)
+print(f"There are {len(unique_emails)} unique customers.")
+
+# Find duplicate emails
+duplicates = {email for email in emails if emails.count(email) > 1}
+print(f"Duplicate emails: {duplicates}")
+```
+
+### Finding Common Tags
+
+```python
+# Articles with tags
+articles = [
+    {"id": 1, "title": "Python Basics", "tags": {"python", "programming", "beginner"}},
+    {"id": 2, "title": "Advanced Python", "tags": {"python", "advanced", "classes"}},
+    {"id": 3, "title": "Web Development", "tags": {"web", "javascript", "html", "css"}},
+    {"id": 4, "title": "Python Web Frameworks", "tags": {"python", "web", "django", "flask"}}
+]
+
+# Find articles with both "python" and "web" tags
+python_web_articles = [
+    article for article in articles 
+    if {"python", "web"}.issubset(article["tags"])
+]
+print(f"Articles about Python web development: {[a['title'] for a in python_web_articles]}")
+
+# Find all unique tags
+all_tags = set().union(*(article["tags"] for article in articles))
+print(f"All unique tags: {all_tags}")
+
+# Group articles by tag
+articles_by_tag = {}
+for article in articles:
+    for tag in article["tags"]:
+        if tag not in articles_by_tag:
+            articles_by_tag[tag] = []
+        articles_by_tag[tag].append(article["title"])
+
+print(f"Python articles: {articles_by_tag['python']}")
+```
+
+### Network Analysis
+
+```python
+# Network connections represented as sets of connections
+network = {
+    'Alice': {'Bob', 'Charlie', 'David'},
+    'Bob': {'Alice', 'Charlie', 'Eve'},
+    'Charlie': {'Alice', 'Bob', 'David', 'Eve'},
+    'David': {'Alice', 'Charlie', 'Frank'},
+    'Eve': {'Bob', 'Charlie', 'Frank'},
+    'Frank': {'David', 'Eve'}
+}
+
+# Find common connections between Alice and Bob
+common_connections = network['Alice'] & network['Bob']
+print(f"Common connections between Alice and Bob: {common_connections}")
+
+# Find people connected to Bob but not to Alice
+bob_not_alice = network['Bob'] - network['Alice']
+print(f"Bob's connections that Alice doesn't have: {bob_not_alice}")
+
+# Find people who are second-degree connections of Alice
+# (connected to Alice's connections, but not directly to Alice)
+second_degree = set().union(*(network[person] for person in network['Alice'])) - network['Alice'] - {'Alice'}
+print(f"Alice's second-degree connections: {second_degree}")
+```
+
+### Text Analysis
+
+```python
+def word_frequency(text):
+    """Analyze the frequency of words in a text."""
+    # Remove punctuation and convert to lowercase
+    import string
+    text = text.lower()
+    for punct in string.punctuation:
+        text = text.replace(punct, '')
+        
+    # Split into words and count
+    words = text.split()
+    word_count = {}
+    unique_words = set(words)
+    
+    for word in unique_words:
+        word_count[word] = words.count(word)
+        
+    return word_count, len(unique_words), len(words)
+
+text = "To be or not to be, that is the question. Whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles and by opposing end them."
+
+counts, unique_count, total_count = word_frequency(text)
+print(f"Total words: {total_count}")
+print(f"Unique words: {unique_count}")
+print(f"Most common words: {sorted(counts.items(), key=lambda x: x[1], reverse=True)[:5]}")
+```
+
+## Practice Exercises
+
+1. Write a function that takes two lists and returns three lists: items only in the first list, items only in the second list, and items in both lists.
+
+2. Create a function that finds all the unique elements across any number of input iterables.
+
+3. Implement a function that checks if two strings are anagrams of each other (contain the same characters with the same frequencies).
+
+4. Write a function that takes a list of integers and returns True if there are any duplicates, otherwise False.
+
+5. Create a function that takes a list of sets and finds the set that would add the most new elements to a running total set.
+
+6. Implement a simple spell checker that compares a word against a dictionary of known words and suggests corrections for misspelled words based on adding, removing, or changing one character.
+
+7. Write a function that simulates a Venn diagram for up to three sets, printing out how many elements are in each region of the diagram.
+
+## Summary
+
+Sets are a powerful and often underutilized data structure in Python. They provide efficient operations for working with unique collections of elements and performing mathematical set operations. Key points to remember:
+
+- Sets store unique, hashable elements
+- Sets are unordered and don't maintain insertion order
+- Set operations include union (`|`), intersection (`&`), difference (`-`), and symmetric difference (`^`)
+- Sets provide O(1) average time complexity for membership testing, adding, and removing elements
+- Frozen sets are immutable sets that can be used as dictionary keys or set elements
+- Sets are perfect for removing duplicates, finding unique elements, and set-based algorithms
+- When order matters, consider using OrderedDict or dict instead of sets
+
+In the next section, we'll explore comprehensions in depth, a powerful feature for creating lists, dictionaries, and sets in a concise and readable way. 

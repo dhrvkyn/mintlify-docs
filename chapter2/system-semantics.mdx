@@ -1,0 +1,355 @@
+---
+title: Syntax and Semantics
+description: Learn Python's core syntax rules and semantic principles
+---
+
+# Syntax and Semantics
+
+In this section, we'll explore Python's syntax (the rules that govern the structure of the language) and semantics (the meaning behind the code). Python's clean, readable syntax is one of its most distinctive features and a key reason for its popularity.
+
+## Python's Indentation and Structure
+
+### Indentation for Block Structure
+
+Unlike many other programming languages that use braces `{}` or keywords like `begin`/`end` to define code blocks, Python uses **indentation**. This enforces clean, readable code by making the visual structure match the logical structure.
+
+```python
+# Example of Python indentation
+if temperature > 30:
+    print("It's hot outside!")
+    if humidity > 80:
+        print("And it's humid!")
+        print("Be sure to stay hydrated.")
+    print("Consider staying indoors.")
+else:
+    print("The temperature is fine.")
+```
+
+**Key rules about indentation:**
+
+- Use consistent indentation throughout your code
+- The standard is 4 spaces per indentation level (not tabs)
+- All statements within the same block must have the same indentation
+- Increasing the indentation starts a new block
+- Decreasing the indentation ends the current block
+
+### Statements and Lines
+
+In Python:
+
+- Each line typically contains one statement
+- Statements end with a newline, not a semicolon (though semicolons can be used to put multiple statements on one line)
+- Long statements can be broken across multiple lines using the `\` character or implicit line continuation inside parentheses, brackets, or braces
+
+```python
+# Multiple statements on one line (not recommended)
+a = 1; b = 2; c = 3
+
+# Long statement broken across multiple lines
+total = item_one + item_two + item_three \
+        + item_four + item_five
+
+# Implicit line continuation (preferred)
+total = (item_one + item_two + item_three +
+         item_four + item_five)
+```
+
+## Comments in Python
+
+Comments in Python start with the `#` character and extend to the end of the line. They are ignored by the Python interpreter.
+
+```python
+# This is a comment
+x = 5  # This is an inline comment
+
+# This is a
+# multi-line comment
+# using multiple # symbols
+```
+
+Python doesn't have a built-in syntax for multi-line comments like `/* */` in other languages, but you can use multi-line strings (docstrings) as a workaround:
+
+```python
+"""
+This is not technically a comment, but a string literal
+that isn't assigned to any variable, so it's effectively a comment.
+This approach is commonly used for function and class documentation.
+"""
+```
+
+## Python Keywords and Reserved Words
+
+Python has a set of keywords that are reserved for specific purposes and cannot be used as variable names or function names:
+
+```
+False    class     finally   is        return
+None     continue  for       lambda    try
+True     def       from      nonlocal  while
+and      del       global    not       with
+as       elif      if        or        yield
+assert   else      import    pass
+break    except    in        raise
+```
+
+## Python's Line Structure
+
+### Physical Lines vs. Logical Lines
+
+In Python:
+- A **physical line** is what you type (ended by pressing Enter)
+- A **logical line** is what Python sees as a single statement
+
+Multiple physical lines can make up one logical line (using `\` or parentheses). Conversely, multiple logical lines can be on one physical line (using semicolons).
+
+### The Maximum Line Length
+
+PEP 8 (Python's style guide) recommends limiting lines to 79 characters for code and 72 for comments and docstrings. This is not enforced by the interpreter but is a style convention.
+
+## Basic Syntax Elements
+
+### Expressions and Statements
+
+- An **expression** is a combination of values, variables, and operators that evaluates to a value
+- A **statement** is a unit of code that the Python interpreter can execute
+
+```python
+# Expression
+3 + 4 * 2
+
+# Statement
+x = 3 + 4 * 2
+```
+
+### Identifiers (Names)
+
+Rules for naming variables, functions, classes, etc. in Python:
+
+- Can contain letters, numbers, and underscore (_)
+- Cannot start with a number
+- Cannot be a Python keyword
+- Case-sensitive (`name`, `Name`, and `NAME` are different variables)
+
+```python
+# Valid identifiers
+name = "Alice"
+user_age = 25
+_private = "secret"
+camelCase = "also valid but not preferred in Python"
+snake_case = "preferred naming convention in Python"
+
+# Invalid identifiers
+# 2nd_name = "Bob"  # Cannot start with a number
+# class = "Physics"  # Cannot use Python keywords
+```
+
+## Python's Naming Conventions
+
+Following Python's naming conventions improves code readability:
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Variables | Snake case | `user_name` |
+| Functions | Snake case | `calculate_total()` |
+| Constants | Uppercase with underscores | `MAX_VALUE` |
+| Classes | CapWords/Pascal case | `PersonalData` |
+| Modules | Short, lowercase | `math`, `sys` |
+| Packages | Short, lowercase | `numpy`, `pandas` |
+
+## Code Organization
+
+### Imports
+
+Python modules are imported at the beginning of a file:
+
+```python
+# Standard library imports
+import math
+import os.path
+from datetime import datetime
+
+# Third-party imports
+import numpy as np
+import pandas as pd
+
+# Local application imports
+from mypackage import mymodule
+from . import local_module
+```
+
+The recommended import order is:
+1. Standard library imports
+2. Related third-party imports
+3. Local application-specific imports
+
+With blank lines between each group.
+
+### Module Structure
+
+A typical Python module is structured as follows:
+
+```python
+"""Module docstring describing the module's purpose."""
+
+# Imports
+import math
+import random
+
+# Constants
+PI = 3.14159
+MAX_VALUE = 1000
+
+# Function definitions
+def calculate_area(radius):
+    """Calculate the area of a circle."""
+    return PI * radius * radius
+
+# Classes
+class Circle:
+    """A class representing a circle."""
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return calculate_area(self.radius)
+
+# Main execution
+if __name__ == "__main__":
+    circle = Circle(5)
+    print(f"The area is: {circle.area()}")
+```
+
+## Python's Execution Model
+
+When you run a Python program:
+
+1. The code is parsed (checked for syntax errors)
+2. The code is compiled to bytecode
+3. The bytecode is executed by the Python interpreter
+
+Python uses a "first encounter" rule: code blocks are executed when they're first encountered in the flow of execution, not when they're defined. This is different from some other languages.
+
+## Semantic Principles in Python
+
+### Dynamic Typing
+
+Python is dynamically typed, meaning you don't need to declare variable types:
+
+```python
+x = 5         # x is an integer
+x = "hello"   # Now x is a string
+x = [1, 2, 3] # Now x is a list
+```
+
+### Duck Typing
+
+Python follows the principle: "If it walks like a duck and quacks like a duck, then it's a duck." This means Python cares about what an object can do (its methods and properties) rather than what it is (its type).
+
+```python
+# Both strings and lists have a __len__ method, so both can be used with len()
+len("hello")  # 5
+len([1, 2, 3])  # 3
+```
+
+### First-Class Everything
+
+In Python, everything is an object, including functions. This means functions can be:
+- Assigned to variables
+- Passed as arguments to other functions
+- Returned from other functions
+- Stored in data structures
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+
+# Assign function to variable
+welcome = greet
+print(welcome("Alice"))  # "Hello, Alice!"
+
+# Store functions in data structures
+function_list = [greet, len, str.upper]
+print(function_list[0]("Bob"))  # "Hello, Bob!"
+```
+
+## Common Pitfalls and Best Practices
+
+### Mutable vs. Immutable Default Arguments
+
+A common mistake in Python is using mutable objects as default arguments:
+
+```python
+# Problematic: The list is created once when the function is defined
+def add_to_list(item, my_list=[]):
+    my_list.append(item)
+    return my_list
+
+print(add_to_list("a"))  # ["a"]
+print(add_to_list("b"))  # ["a", "b"] - Surprising!
+
+# Correct approach
+def add_to_list_correctly(item, my_list=None):
+    if my_list is None:
+        my_list = []
+    my_list.append(item)
+    return my_list
+```
+
+### Proper Indentation
+
+Inconsistent indentation can lead to syntax errors or unexpected behavior:
+
+```python
+# This will cause an IndentationError
+if x > 0:
+print("x is positive")  # Should be indented
+
+# This might cause logical errors
+if x > 0:
+    print("x is positive")
+    if x > 10:
+        print("x is greater than 10")
+    print("This line is part of the outer if, not the inner one")
+```
+
+## Next Steps
+
+Now that you understand Python's basic syntax and semantics, we'll explore data types and variables in the next section. These concepts will give you the foundation to work with different kinds of data in Python.
+
+---
+
+## Practice Exercises
+
+1. Identify and fix the syntax errors in the following code:
+   ```python
+   if temperature > 30
+       print("It's hot outside")
+   else:
+   print("The temperature is fine")
+   ```
+
+2. Rewrite the following code using proper Python naming conventions:
+   ```python
+   Class = "Physics 101"
+   Student_Name = "John Doe"
+   def CalculateAverage(numbers):
+       Sum = 0
+       for Num in numbers:
+           Sum += Num
+       return Sum / len(numbers)
+   ```
+
+3. Explain why the following code behaves as it does and fix the issue:
+   ```python
+   def append_to(element, to=[]):
+       to.append(element)
+       return to
+   
+   list1 = append_to(1)
+   list2 = append_to(2)
+   print(list1)  # What does this print?
+   print(list2)  # What does this print?
+   ```
+
+4. Write a program that uses proper indentation to print all numbers from 1 to 20, but for multiples of 3, print "Fizz" instead of the number, for multiples of 5, print "Buzz", and for multiples of both 3 and 5, print "FizzBuzz".
+
+5. Identify and explain at least three Python keywords in your own words, then write a short program that demonstrates their use. 

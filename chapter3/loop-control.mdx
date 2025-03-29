@@ -1,0 +1,545 @@
+---
+title: Loop Control
+description: Learn how to control loop execution with break, continue, and else clauses
+---
+
+# Loop Control
+
+In the previous section, we explored the basic looping constructs in Python. Now, we'll dive deeper into techniques for controlling loop execution flow. These techniques give you finer control over how your loops behave, allowing you to create more efficient and elegant solutions.
+
+## The `break` Statement
+
+The `break` statement immediately terminates the current loop and continues execution at the next statement after the loop.
+
+### Basic Usage
+
+```python
+for i in range(1, 11):
+    if i == 5:
+        break  # Exit the loop when i equals 5
+    print(i)
+
+print("Loop ended")
+```
+
+This will output:
+```
+1
+2
+3
+4
+Loop ended
+```
+
+The loop stops as soon as `i` reaches 5, without executing the print statement for that iteration.
+
+### Practical Applications
+
+#### Early Exit from Search
+
+```python
+def find_index(items, target):
+    """Find the index of target in items, or return -1 if not found."""
+    for index, item in enumerate(items):
+        if item == target:
+            return index  # Found the item, exit the function (and the loop)
+    return -1  # Item not found
+```
+
+#### User Input Validation
+
+```python
+while True:
+    password = input("Enter a password (minimum 8 characters): ")
+    if len(password) >= 8:
+        print("Password accepted!")
+        break
+    print("Password too short, try again.")
+```
+
+#### Limiting Iterations
+
+```python
+# Limit the number of attempts to find a solution
+max_attempts = 100
+attempt = 0
+
+while attempt < max_attempts:
+    attempt += 1
+    # Try to find a solution
+    if found_solution():
+        print(f"Solution found after {attempt} attempts")
+        break
+    
+if attempt == max_attempts:
+    print("Failed to find solution within the limit")
+```
+
+## The `continue` Statement
+
+The `continue` statement skips the rest of the current loop iteration and moves on to the next iteration.
+
+### Basic Usage
+
+```python
+for i in range(1, 11):
+    if i % 2 == 0:
+        continue  # Skip even numbers
+    print(i)
+```
+
+This will output:
+```
+1
+3
+5
+7
+9
+```
+
+The print statement is skipped whenever `i` is an even number.
+
+### Practical Applications
+
+#### Filtering Data
+
+```python
+def process_positive_numbers(numbers):
+    """Process only positive numbers from a list."""
+    for num in numbers:
+        if num <= 0:
+            continue  # Skip non-positive numbers
+        
+        # Process the positive number
+        result = num ** 2
+        print(f"Processed {num} -> {result}")
+```
+
+#### Input Validation in a Loop
+
+```python
+valid_entries = []
+
+while len(valid_entries) < 5:
+    entry = input("Enter a positive number: ")
+    
+    # Skip non-numeric entries
+    if not entry.isdigit():
+        print("That's not a number, try again.")
+        continue
+    
+    # Convert to number and validate
+    number = int(entry)
+    if number <= 0:
+        print("Please enter a positive number.")
+        continue
+    
+    # If we get here, the entry is valid
+    valid_entries.append(number)
+
+print("Valid entries:", valid_entries)
+```
+
+#### Skipping Problematic Items
+
+```python
+def process_files(filenames):
+    """Process multiple files, skipping any that don't exist."""
+    for filename in filenames:
+        try:
+            with open(filename, 'r') as file:
+                content = file.read()
+                # Process file content
+        except FileNotFoundError:
+            print(f"Skipping {filename}: File not found")
+            continue
+        
+        print(f"Processed {filename}")
+```
+
+## Nested Loops and Control Statements
+
+Control statements like `break` and `continue` only affect the innermost loop that contains them.
+
+```python
+for i in range(3):
+    for j in range(3):
+        if j == 1:
+            break  # This only breaks out of the inner loop
+        print(f"({i}, {j})", end=" ")
+    print()  # New line after each inner loop (complete or broken)
+```
+
+This will output:
+```
+(0, 0) 
+(1, 0) 
+(2, 0) 
+```
+
+### Breaking Out of Nested Loops
+
+If you need to break out of multiple nested loops, you have several options:
+
+#### Option 1: Using a flag variable
+
+```python
+found = False
+for i in range(5):
+    for j in range(5):
+        if condition(i, j):
+            found = True
+            break  # Break the inner loop
+    if found:
+        break  # Break the outer loop
+```
+
+#### Option 2: Using a function
+
+```python
+def search_grid():
+    for i in range(5):
+        for j in range(5):
+            if condition(i, j):
+                return (i, j)  # Exit both loops by returning
+    return None  # Not found
+
+result = search_grid()
+```
+
+#### Option 3: Using exceptions (less common)
+
+```python
+try:
+    for i in range(5):
+        for j in range(5):
+            if condition(i, j):
+                raise StopIteration  # Raise an exception to break all loops
+except StopIteration:
+    pass  # Catch the exception and continue execution
+```
+
+## The `else` Clause in Loops
+
+Both `for` and `while` loops can have an optional `else` clause. The code in the `else` block executes after the loop completes normally (without encountering a `break` statement).
+
+### Basic Usage
+
+```python
+for i in range(5):
+    print(i)
+else:
+    print("Loop completed without breaks")
+```
+
+This will output:
+```
+0
+1
+2
+3
+4
+Loop completed without breaks
+```
+
+If a `break` statement executes inside the loop, the `else` block is skipped:
+
+```python
+for i in range(5):
+    if i == 3:
+        break
+    print(i)
+else:
+    print("This won't be printed because break was called")
+```
+
+This will output:
+```
+0
+1
+2
+```
+
+### Practical Applications
+
+#### Search Algorithms
+
+```python
+def find_item(items, target):
+    """Check if target exists in items."""
+    for item in items:
+        if item == target:
+            print(f"Found {target}!")
+            break
+    else:
+        print(f"{target} not found in the list")
+```
+
+#### Validation Loops
+
+```python
+def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False  # Not prime, divisible by i
+    else:
+        return True  # Prime, not divisible by any number
+```
+
+#### Ensuring All Items Are Processed
+
+```python
+def process_all_items(items):
+    """Process all items, unless an error occurs."""
+    for item in items:
+        if not validate(item):
+            print(f"Invalid item: {item}")
+            break
+        process(item)
+    else:
+        print("All items processed successfully")
+```
+
+## Common Loop Patterns
+
+Let's explore some common patterns that use loop control statements effectively.
+
+### Finding the First Matching Item
+
+```python
+def find_first_matching(items, condition):
+    for item in items:
+        if condition(item):
+            return item  # Return the first match and exit
+    return None  # No matches found
+```
+
+### Processing Items Until a Condition Is Met
+
+```python
+def process_until_threshold(values, threshold):
+    total = 0
+    for value in values:
+        total += value
+        if total >= threshold:
+            break  # Stop once threshold is reached
+    return total
+```
+
+### Skipping Items That Meet a Condition
+
+```python
+def process_except_negative(numbers):
+    results = []
+    for num in numbers:
+        if num < 0:
+            continue  # Skip negative numbers
+        results.append(process(num))
+    return results
+```
+
+### Early Exit with Success or Failure
+
+```python
+def validate_all(items, validator):
+    for item in items:
+        if not validator(item):
+            return False  # Exit with failure on first invalid item
+    return True  # All items are valid
+```
+
+## Advanced Loop Control Techniques
+
+### Using `enumerate` with `break` and `continue`
+
+```python
+def find_position(items, target):
+    for i, item in enumerate(items):
+        if item == target:
+            return i  # Return the position
+        if item > target:  # Assuming items is sorted
+            break  # Early exit if we've gone past where target would be
+    return -1  # Not found
+```
+
+### Using `zip` with Loop Control
+
+```python
+def find_first_pair_sum(list1, list2, target_sum):
+    for x, y in zip(list1, list2):
+        current_sum = x + y
+        if current_sum == target_sum:
+            return (x, y)  # Return the first pair that sums to target_sum
+        if current_sum > target_sum:  # Assuming lists are sorted
+            break  # Early exit
+    return None  # No matching pair found
+```
+
+### Handling Special Cases at the Beginning or End
+
+```python
+def process_with_special_cases(items):
+    if not items:
+        return []  # Handle empty list case
+    
+    results = []
+    
+    # Handle first item separately if needed
+    first_item = items[0]
+    if special_condition(first_item):
+        results.append(special_process(first_item))
+    else:
+        results.append(regular_process(first_item))
+    
+    # Process middle items
+    for item in items[1:-1]:
+        results.append(regular_process(item))
+    
+    # Handle last item separately if needed
+    if len(items) > 1:
+        last_item = items[-1]
+        if special_condition(last_item):
+            results.append(special_process(last_item))
+        else:
+            results.append(regular_process(last_item))
+    
+    return results
+```
+
+## Best Practices for Loop Control
+
+1. **Use `break` and `continue` judiciously**
+   - Too many control flow modifications can make code harder to follow
+   - Consider refactoring complex loops into smaller functions
+
+2. **Prefer positive conditions when possible**
+   ```python
+   # Less clear
+   for item in items:
+       if not is_valid(item):
+           continue
+       process(item)
+   
+   # More clear
+   for item in items:
+       if is_valid(item):
+           process(item)
+   ```
+
+3. **Use clear names for flag variables**
+   ```python
+   found_match = False
+   for item in items:
+       if item == target:
+           found_match = True
+           break
+   
+   if found_match:
+       print("Match found")
+   ```
+
+4. **Consider using functions for complex loop logic**
+   - Functions make the code more modular and easier to understand
+   - They also allow you to exit multiple loops with a simple `return`
+
+5. **Use the `else` clause when it enhances readability**
+   - It's most useful for search operations and validations
+   - If the logic is complex, consider alternative approaches
+
+6. **Be cautious with nested loops and multiple control statements**
+   - Nested loops with multiple breaks and continues can be hard to follow
+   - Consider refactoring into helper functions or using different algorithms
+
+## Common Pitfalls and How to Avoid Them
+
+### Infinite Loops
+
+Always ensure that `while` loops have a way to terminate:
+
+```python
+# Potential infinite loop
+while user_input != "quit":
+    user_input = input("> ")  # If input() fails, this could loop forever
+
+# Better approach - add a safety check
+max_attempts = 100
+attempts = 0
+while user_input != "quit" and attempts < max_attempts:
+    attempts += 1
+    try:
+        user_input = input("> ")
+    except:
+        break  # Exit on input failure
+```
+
+### Forgetting to Update Loop Variables
+
+```python
+# Infinite loop - i never changes
+i = 0
+while i < 10:
+    print(i)
+    # Forgot to increment i
+
+# Correct version
+i = 0
+while i < 10:
+    print(i)
+    i += 1
+```
+
+### Modifying Collections During Iteration
+
+```python
+# Problematic - modifying the list while iterating
+items = [1, 2, 3, 4, 5]
+for item in items:
+    if item % 2 == 0:
+        items.remove(item)  # This can cause items to be skipped
+
+# Better approach - create a new list
+items = [1, 2, 3, 4, 5]
+filtered_items = []
+for item in items:
+    if item % 2 != 0:
+        filtered_items.append(item)
+
+# Or use a list comprehension
+filtered_items = [item for item in items if item % 2 != 0]
+```
+
+### Breaking Out of the Wrong Loop
+
+```python
+# Might not behave as expected
+for i in range(5):
+    print(f"Outer loop: {i}")
+    for j in range(5):
+        if condition(i, j):
+            break  # This only breaks the inner loop
+```
+
+## Next Steps
+
+Now that you've mastered loop control techniques, you're ready to write more efficient and elegant loops in your Python programs. In the next section, we'll explore practical exercises that will help you apply these concepts to real-world problems.
+
+---
+
+## Practice Exercises
+
+1. Write a program that finds the first prime number greater than a number provided by the user. Use a `while` loop with a `break` statement.
+
+2. Create a function that takes a list of numbers and returns the sum of all numbers until the first negative number is encountered. Use a `for` loop with a `break` statement.
+
+3. Write a program that reads a list of words and prints all words that start with a vowel, skipping words that start with a consonant. Use a `for` loop with `continue`.
+
+4. Create a function that searches for a specific value in a 2D grid (a list of lists). Return the coordinates (row, column) if found, or `None` if not found. Use nested loops with a `break`.
+
+5. Implement a function that validates a password. The password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one digit. Use a combination of loops and `if` statements with `break` and `continue` to perform the validation efficiently.
+
+6. Write a program that prompts the user to enter positive numbers to add to a sum. If the user enters a negative number, it should be ignored (use `continue`). If the user enters 0, the program should stop asking for numbers (use `break`) and display the final sum.
+
+7. Create a function `is_all_unique(items)` that checks if all items in a list are unique. Use a loop with `else` to handle the case when all items have been checked and no duplicates were found. 

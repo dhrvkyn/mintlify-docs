@@ -1,0 +1,272 @@
+---
+title: Chapter 4 Exercises
+description: Practice exercises to master Python data structures including lists, tuples, dictionaries, sets, and comprehensions
+---
+
+# Chapter 4: Data Structures - Exercises
+
+This set of exercises is designed to help you master Python's built-in data structures. By completing these exercises, you'll gain hands-on experience with lists, tuples, dictionaries, sets, and comprehensions, and learn how to choose the right data structure for different scenarios.
+
+## Basic Data Structure Manipulation
+
+### Exercise 1: List Operations
+
+Write a program that performs the following operations on a list:
+
+1. Create a list of the first 10 square numbers (1, 4, 9, ..., 100)
+2. Add the next square number to the end of the list
+3. Insert the square of 0 at the beginning of the list
+4. Remove the 5th element of the list
+5. Sort the list in descending order
+6. Create a new list containing only the even square numbers from the original list
+
+```python
+# Your solution here
+```
+
+### Exercise 2: Tuple Manipulation
+
+Given a tuple of months: `months = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')`, write a program that:
+
+1. Prints the first quarter (first three months)
+2. Prints the last quarter (last three months)
+3. Prints all months whose names contain the letter 'r'
+4. Creates a tuple of tuples, where each inner tuple contains the month name and its length
+5. Counts how many months have exactly 5 letters in their name
+
+```python
+# Your solution here
+```
+
+### Exercise 3: Dictionary Basics
+
+Create a dictionary that maps country names to their capitals. Include at least 5 countries. Then:
+
+1. Add a new country-capital pair to the dictionary
+2. Update the capital of one of the existing countries
+3. Remove a country-capital pair
+4. Check if a specific country is in the dictionary
+5. Create a new dictionary where the keys are the capitals and the values are their respective countries (reverse the mapping)
+
+```python
+# Your solution here
+```
+
+### Exercise 4: Set Operations
+
+Given two sets:
+```python
+set_a = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+set_b = {2, 4, 6, 8, 10, 12, 14}
+```
+
+Perform the following operations:
+1. Find the union of set_a and set_b
+2. Find the intersection of set_a and set_b
+3. Find the elements that are in set_a but not in set_b
+4. Find the elements that are in either set_a or set_b, but not in both (symmetric difference)
+5. Check if set_b is a subset of set_a
+6. Create a new set containing numbers from 1 to 15 and check if it's a superset of both set_a and set_b
+
+```python
+# Your solution here
+```
+
+## Intermediate Data Structure Applications
+
+### Exercise 5: Nested Data Structures
+
+Implement a simple contact book using nested dictionaries:
+
+1. Create a dictionary where keys are names and values are dictionaries containing 'email', 'phone', and 'address'
+2. Add at least 3 contacts with their details
+3. Write a function that prints all contacts in a formatted way
+4. Write a function to search for a contact by name
+5. Write a function to search for contacts by any field (email, phone, or address)
+6. Update a contact's information
+7. Delete a contact
+
+```python
+# Your solution here
+```
+
+### Exercise 6: Dictionary of Lists
+
+Create a program to manage a small library:
+
+1. Create a dictionary where keys are book categories (e.g., 'fiction', 'science', 'history') and values are lists of books in those categories
+2. Each book should be a dictionary with 'title', 'author', and 'year' keys
+3. Add at least 3 categories with 2-3 books each
+4. Write a function to add a new book to a category
+5. Write a function to find all books by a specific author
+6. Write a function to find all books published before a given year
+7. Create a function that returns all books sorted by year
+
+```python
+# Your solution here
+```
+
+### Exercise 7: List and Tuple Processing
+
+Implement a function to analyze student exam scores:
+
+1. Create a list of tuples, where each tuple contains a student's name and their score in an exam
+2. Write a function to calculate the average score
+3. Write a function to find the highest and lowest scoring students
+4. Write a function to group students by score ranges (A: 90-100, B: 80-89, C: 70-79, D: 60-69, F: below 60)
+5. Sort the list by scores in descending order
+
+```python
+# Your solution here
+```
+
+### Exercise 8: Set Applications
+
+Implement a function to analyze text:
+
+1. Write a function that takes a string and returns a set of all unique words in it
+2. Write a function that takes two strings and returns a set of words that appear in both
+3. Write a function that takes two strings and returns a set of words that appear in either one but not both
+4. Write a function that counts how many unique words are in a text
+5. Write a function that identifies the top 5 most common words in a text (hint: use a dictionary to count occurrences)
+
+```python
+# Your solution here
+```
+
+## Advanced Comprehensions and Combined Data Structures
+
+### Exercise 9: Advanced List Comprehensions
+
+Solve the following problems using list comprehensions:
+
+1. Create a list of all numbers from 1 to 100 that are divisible by 3 or 5
+2. Create a list of tuples, where each tuple contains a number and its cube, for numbers from 1 to 10
+3. Flatten a list of lists into a single list
+4. Filter out all vowels from a string and return a list of the remaining characters
+5. Create a list of the first letter of each word in a sentence, but only if the word is longer than 3 characters
+
+```python
+# Your solution here
+```
+
+### Exercise 10: Dictionary and Set Comprehensions
+
+Solve the following problems using dictionary and set comprehensions:
+
+1. Create a dictionary mapping numbers from 1 to 10 to their square roots
+2. Create a dictionary where keys are words in a sentence and values are their lengths
+3. Create a set of all characters that appear in a string (case-insensitive)
+4. Create a dictionary that groups words in a text by their first letter
+5. Create a dictionary mapping each digit (0-9) to a list of positions where it appears in a given number
+
+```python
+# Your solution here
+```
+
+### Exercise 11: Data Analysis with Comprehensions
+
+You have a list of dictionaries representing employees:
+
+```python
+employees = [
+    {'name': 'John', 'age': 32, 'department': 'IT', 'salary': 75000},
+    {'name': 'Lisa', 'age': 29, 'department': 'Marketing', 'salary': 70000},
+    {'name': 'Michael', 'age': 45, 'department': 'IT', 'salary': 90000},
+    {'name': 'Sarah', 'age': 37, 'department': 'HR', 'salary': 65000},
+    {'name': 'David', 'age': 41, 'department': 'Marketing', 'salary': 85000}
+]
+```
+
+Use comprehensions to:
+
+1. Create a list of all employee names
+2. Create a dictionary mapping department names to a list of employees in that department
+3. Calculate the average salary per department
+4. Find the highest-paid employee in each department
+5. Create a dictionary that groups employees by age range (20-29, 30-39, 40-49)
+
+```python
+# Your solution here
+```
+
+## Real-World Applications
+
+### Exercise 12: Analyzing CSV Data
+
+Write a program that reads a CSV file containing product data (product_id, name, price, category) and:
+
+1. Loads the data into a list of dictionaries
+2. Calculates the average price of products in each category
+3. Finds the most expensive and least expensive product in each category
+4. Creates a dictionary mapping price ranges to lists of products in that range
+5. Identifies products whose names contain a specific word
+
+```python
+# Example CSV structure:
+# product_id,name,price,category
+# 1,Laptop,1200,Electronics
+# 2,T-shirt,25,Clothing
+# 3,Book,15,Books
+# ...
+
+# Your solution here
+```
+
+### Exercise 13: Inventory Management System
+
+Create a simple inventory management system using dictionaries:
+
+1. Create a dictionary representing an inventory, where keys are product IDs and values are dictionaries containing 'name', 'price', 'quantity', and 'category'
+2. Implement functions to:
+   - Add a new product to the inventory
+   - Update product details (price, quantity)
+   - Remove a product from the inventory
+   - List all products in a specific category
+   - Calculate the total inventory value (price * quantity for all products)
+   - Find products that are low in stock (quantity < 5)
+
+```python
+# Your solution here
+```
+
+### Exercise 14: Text Analysis Tool
+
+Create a text analysis tool that takes a text file and:
+
+1. Counts the frequency of each word
+2. Identifies the most common and least common words
+3. Calculates the average word length
+4. Finds all words above a certain length
+5. Groups words by their length
+6. Creates a concordance (a dictionary mapping each word to the list of positions where it appears)
+
+```python
+# Your solution here
+```
+
+### Exercise 15: Social Network Model
+
+Model a simple social network using dictionaries and sets:
+
+1. Create a dictionary where keys are user names and values are sets of friends
+2. Implement functions to:
+   - Add a new user
+   - Add a friendship between two users (remember to update both users)
+   - Remove a friendship
+   - Find friends of a specific user
+   - Find friends of friends (people who are not direct friends but are friends of friends)
+   - Find common friends between two users
+   - Suggest potential friends based on common connections
+
+```python
+# Your solution here
+```
+
+## Solutions
+
+Solutions to these exercises can be found in the accompanying solutions file. However, it's highly recommended to try solving these exercises on your own first, as the practical experience is invaluable for learning.
+
+Remember, there are often multiple correct ways to solve a problem in Python. Your solution might look different from the provided one and still be valid. The key is to understand the properties and methods of each data structure and choose the most appropriate one for each task.
+
+Next, we'll move on to Chapter 5, where we'll explore functions and modules, learning how to organize code and create reusable components. 

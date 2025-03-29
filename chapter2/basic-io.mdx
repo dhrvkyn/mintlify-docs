@@ -1,0 +1,427 @@
+---
+title: Basic I/O
+description: Learn how to handle input and output in Python
+---
+
+# Basic I/O
+
+Input and Output (I/O) operations are fundamental to programming. They allow your program to interact with users, files, and other systems. In this section, we'll focus on basic console I/O - getting input from users and displaying output on the screen.
+
+## Output with `print()`
+
+The `print()` function is the most common way to display output in Python.
+
+### Basic Usage
+
+```python
+print("Hello, Python Mastery!")  # Prints: Hello, Python Mastery!
+
+# Printing variables
+name = "Alice"
+age = 30
+print(name)      # Prints: Alice
+print(age)       # Prints: 30
+
+# Printing multiple items
+print(name, age)  # Prints: Alice 30
+```
+
+### Print Formatting
+
+The `print()` function can format output in various ways:
+
+```python
+# Print with a custom separator
+print("Apple", "Banana", "Cherry", sep=", ")  # Prints: Apple, Banana, Cherry
+
+# Print with a custom end character (default is newline)
+print("Hello", end=" ")
+print("World")  # Prints: Hello World
+
+# Printing with tabs and newlines
+print("Name:\tAlice\nAge:\t30")
+# Prints:
+# Name:   Alice
+# Age:    30
+```
+
+### Escape Sequences
+
+Escape sequences allow you to include special characters in strings:
+
+| Escape Sequence | Meaning |
+|-----------------|---------|
+| `\n` | Newline |
+| `\t` | Tab |
+| `\\` | Backslash |
+| `\'` | Single quote |
+| `\"` | Double quote |
+| `\r` | Carriage return |
+| `\b` | Backspace |
+
+```python
+print("Line 1\nLine 2")  # Prints two lines
+print("Hello\tWorld")    # Prints with a tab between words
+print("She said, \"Hello!\"")  # Prints quotes within a string
+```
+
+### Printing Variables with Text
+
+There are several ways to combine text and variables in output:
+
+```python
+name = "Alice"
+age = 30
+
+# Using + operator (string concatenation)
+print("Name: " + name + ", Age: " + str(age))  # Note the str() conversion
+
+# Using multiple arguments
+print("Name:", name, ", Age:", age)
+
+# Using f-strings (Python 3.6+, recommended)
+print(f"Name: {name}, Age: {age}")
+
+# Using str.format()
+print("Name: {}, Age: {}".format(name, age))
+print("Name: {n}, Age: {a}".format(n=name, a=age))
+
+# Using % operator (older style)
+print("Name: %s, Age: %d" % (name, age))
+```
+
+### Formatted String Literals (f-strings)
+
+F-strings (introduced in Python 3.6) are the most concise and readable way to format strings:
+
+```python
+name = "Alice"
+age = 30
+height = 5.8
+
+# Basic formatting
+print(f"Name: {name}, Age: {age}, Height: {height}")
+
+# Expression evaluation
+print(f"Next year, {name} will be {age + 1} years old")
+
+# Number formatting
+pi = 3.14159265359
+print(f"Pi rounded to 2 decimal places: {pi:.2f}")  # 3.14
+
+# Width and alignment
+for i in range(1, 11):
+    print(f"{i:2} squared is {i*i:3}")
+
+# Datetime formatting
+import datetime
+now = datetime.datetime.now()
+print(f"Current date: {now:%Y-%m-%d}")
+```
+
+### Pretty Printing
+
+For complex data structures, you can use the `pprint` module for more readable output:
+
+```python
+import pprint
+
+complex_data = {
+    "name": "Alice",
+    "friends": ["Bob", "Charlie", "Dave"],
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "zip": "12345"
+    },
+    "hobbies": ["reading", "hiking", "programming"]
+}
+
+# Standard print
+print(complex_data)
+
+# Pretty print
+pprint.pprint(complex_data)
+```
+
+## Input with `input()`
+
+The `input()` function allows your program to receive text input from the user.
+
+### Basic Usage
+
+```python
+# Basic input
+name = input("Enter your name: ")
+print(f"Hello, {name}!")
+
+# The input function always returns a string
+age_str = input("Enter your age: ")
+print(f"Next year, you'll be {int(age_str) + 1} years old")
+
+# Convert input to the appropriate type
+height = float(input("Enter your height in meters: "))
+print(f"Your height in centimeters: {height * 100}")
+```
+
+### Input Validation
+
+It's important to validate user input to prevent errors:
+
+```python
+# Simple validation
+while True:
+    try:
+        age = int(input("Enter your age: "))
+        if age < 0 or age > 120:
+            print("Please enter a valid age between 0 and 120")
+            continue
+        break
+    except ValueError:
+        print("Please enter a number")
+
+print(f"You entered: {age}")
+```
+
+### Handling Multiple Inputs
+
+You can handle multiple inputs in various ways:
+
+```python
+# Multiple inputs on separate lines
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+
+# Multiple inputs on a single line
+x, y = input("Enter two numbers separated by a space: ").split()
+x, y = int(x), int(y)
+print(f"Sum: {x + y}")
+
+# Multiple inputs with specific separator
+values = input("Enter values separated by commas: ").split(",")
+print(f"You entered {len(values)} values")
+```
+
+## Command Line Arguments
+
+Python programs can accept arguments from the command line using the `sys.argv` list:
+
+```python
+import sys
+
+# The first element (sys.argv[0]) is the script name
+print(f"Script name: {sys.argv[0]}")
+
+# Remaining elements are the arguments
+if len(sys.argv) > 1:
+    print(f"Arguments: {sys.argv[1:]}")
+else:
+    print("No arguments provided")
+```
+
+For example, if you run `python script.py arg1 arg2`, then:
+- `sys.argv[0]` would be `script.py`
+- `sys.argv[1]` would be `arg1`
+- `sys.argv[2]` would be `arg2`
+
+### Using argparse for Command Line Arguments
+
+For more complex command-line interfaces, the `argparse` module provides powerful tools:
+
+```python
+import argparse
+
+# Create the parser
+parser = argparse.ArgumentParser(description='Process some integers.')
+
+# Add arguments
+parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                    help='an integer for the accumulator')
+parser.add_argument('--sum', dest='accumulate', action='store_const',
+                    const=sum, default=max,
+                    help='sum the integers (default: find the max)')
+
+# Parse arguments
+args = parser.parse_args()
+
+# Use the arguments
+result = args.accumulate(args.integers)
+print(result)
+```
+
+## Reading and Writing Files
+
+File I/O is a common operation in many programs. Python makes it easy to read from and write to files.
+
+### Opening and Closing Files
+
+The `open()` function is used to open files:
+
+```python
+# Open a file for reading (default mode is 'r')
+file = open('example.txt', 'r')
+
+# Always close files when you're done with them
+file.close()
+```
+
+It's better to use a context manager (`with` statement) to automatically close files:
+
+```python
+# Using with statement (recommended)
+with open('example.txt', 'r') as file:
+    # File operations here
+    contents = file.read()
+    
+# File is automatically closed when the block exits
+```
+
+### Common File Modes
+
+| Mode | Description |
+|------|-------------|
+| `'r'` | Read (default) |
+| `'w'` | Write (creates new file or truncates existing file) |
+| `'a'` | Append (adds to end of file) |
+| `'b'` | Binary mode (used with other modes: `'rb'`, `'wb'`) |
+| `'t'` | Text mode (default, used with other modes: `'rt'`, `'wt'`) |
+| `'+'` | Update mode (reading and writing) |
+
+### Reading from Files
+
+There are several ways to read from files:
+
+```python
+# Read the entire file as a string
+with open('example.txt', 'r') as file:
+    contents = file.read()
+    print(contents)
+
+# Read line by line
+with open('example.txt', 'r') as file:
+    line = file.readline()  # Read a single line
+    lines = file.readlines()  # Read all lines into a list
+
+# Iterate through the file line by line (memory efficient)
+with open('example.txt', 'r') as file:
+    for line in file:
+        print(line.strip())  # strip() removes the newline character
+```
+
+### Writing to Files
+
+Writing to files is straightforward:
+
+```python
+# Write a string to a file
+with open('output.txt', 'w') as file:
+    file.write("Hello, Python Mastery!\n")
+    file.write("This is a second line.\n")
+
+# Write multiple lines at once
+lines = ["Line 1\n", "Line 2\n", "Line 3\n"]
+with open('output.txt', 'w') as file:
+    file.writelines(lines)
+```
+
+### Appending to Files
+
+To add content to existing files without overwriting:
+
+```python
+# Append to a file
+with open('log.txt', 'a') as file:
+    file.write("New log entry\n")
+```
+
+### Working with Binary Files
+
+For non-text files (images, audio, etc.), use binary mode:
+
+```python
+# Reading a binary file
+with open('image.jpg', 'rb') as file:
+    image_data = file.read()
+
+# Writing to a binary file
+with open('output.jpg', 'wb') as file:
+    file.write(image_data)
+```
+
+## Standard Streams
+
+Python provides three standard streams:
+
+1. **Standard Input (stdin)**: For reading input
+2. **Standard Output (stdout)**: For normal output
+3. **Standard Error (stderr)**: For error messages
+
+These can be accessed via the `sys` module:
+
+```python
+import sys
+
+# Write to stdout
+sys.stdout.write("This is standard output\n")
+
+# Write to stderr
+sys.stderr.write("This is error output\n")
+
+# Read from stdin
+input_line = sys.stdin.readline()
+```
+
+## Redirecting Output to Files
+
+You can redirect print output to files:
+
+```python
+# Redirect print output to a file
+with open('output.txt', 'w') as file:
+    print("This will be written to the file", file=file)
+    print("This is another line", file=file)
+```
+
+## String I/O
+
+For cases where you need file-like operations on strings, the `io` module provides the `StringIO` class:
+
+```python
+import io
+
+# Create a StringIO object
+string_io = io.StringIO()
+
+# Write to the StringIO object
+string_io.write("Hello, ")
+string_io.write("World!")
+
+# Get the value
+output = string_io.getvalue()  # "Hello, World!"
+
+# Read from a StringIO object
+input_string = io.StringIO("Line 1\nLine 2\nLine 3")
+for line in input_string:
+    print(line.strip())
+
+# Always close the StringIO object when done
+string_io.close()
+```
+
+## Next Steps
+
+Now that you understand basic input and output operations in Python, you're ready to create interactive programs that can communicate with users and handle files. In the next section, we'll explore how to document your code effectively using comments and docstrings.
+
+---
+
+## Practice Exercises
+
+1. Write a program that asks the user for their name, age, and favorite color, then displays a formatted message including all this information.
+
+2. Create a simple calculator program that asks the user for two numbers and an operation (+, -, *, /), then performs the calculation and displays the result.
+
+3. Write a program that reads a text file line by line and counts the number of lines, words, and characters in the file.
+
+4. Create a program that prompts the user to enter a list of numbers (separated by spaces), then writes the numbers, their squares, and their cubes to a file in a neatly formatted table.
+
+5. Write a program that copies a text file, but converts all text to uppercase. The original and destination filenames should be provided as command-line arguments. 

@@ -1,0 +1,557 @@
+---
+title: Dictionaries
+description: Learn to master Python's powerful key-value mapping data structure
+---
+
+# Dictionaries
+
+Dictionaries are one of Python's most powerful and versatile data structures. Unlike sequences (like lists and tuples) that store items in a specific order, dictionaries store data as key-value pairs, allowing you to quickly retrieve values based on their associated keys. This mapping structure makes dictionaries incredibly efficient for lookup operations and data organization.
+
+## Dictionary Basics
+
+### Creating Dictionaries
+
+Python offers several ways to create dictionaries:
+
+```python
+# Empty dictionary
+empty_dict = {}
+empty_dict_alternative = dict()
+
+# Dictionary with initial key-value pairs
+student = {
+    "name": "Alice Smith",
+    "age": 20,
+    "major": "Computer Science",
+    "gpa": 3.8
+}
+
+# Using dict() constructor with keyword arguments
+person = dict(name="Bob Johnson", age=25, job="Developer")
+
+# Creating a dictionary from a list of tuples
+items = [("apple", 0.99), ("banana", 0.59), ("orange", 0.79)]
+prices = dict(items)
+
+# Dictionary comprehension (we'll cover this in detail later)
+squares = {x: x**2 for x in range(1, 6)}  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+```
+
+### Dictionary Keys and Values
+
+Dictionary keys must be hashable (immutable) objects, such as strings, numbers, or tuples (containing only hashable objects). Common key types include:
+
+```python
+# String keys (most common)
+person = {"name": "Alice", "age": 30}
+
+# Number keys
+codes = {200: "OK", 404: "Not Found", 500: "Server Error"}
+
+# Tuple keys (must contain only immutable objects)
+coordinates = {(0, 0): "Origin", (1, 0): "East", (0, 1): "North"}
+
+# Mixed keys
+mixed = {"name": "Alice", 42: "The answer", (1, 2): "Coordinate"}
+```
+
+Values, on the other hand, can be any Python object:
+
+```python
+# Dictionary with various value types
+employee = {
+    "name": "Alice Johnson",
+    "age": 30,
+    "skills": ["Python", "JavaScript", "SQL"],
+    "contact": {"email": "alice@example.com", "phone": "555-1234"},
+    "active": True,
+    "salary": 75000.50
+}
+```
+
+### Accessing Dictionary Values
+
+You can access dictionary values using their keys:
+
+```python
+student = {
+    "name": "Alice Smith",
+    "age": 20,
+    "major": "Computer Science",
+    "gpa": 3.8
+}
+
+# Access values using square bracket notation
+name = student["name"]  # "Alice Smith"
+
+# If you try to access a key that doesn't exist, you'll get a KeyError
+# missing = student["address"]  # KeyError: 'address'
+
+# To avoid errors, use get() which returns None if the key doesn't exist
+address = student.get("address")  # None
+
+# You can provide a default value to be returned if the key doesn't exist
+address = student.get("address", "Not specified")  # "Not specified"
+```
+
+### Modifying Dictionaries
+
+Dictionaries are mutable, so you can add, update, or remove key-value pairs:
+
+```python
+student = {"name": "Alice", "age": 20}
+
+# Adding a new key-value pair
+student["major"] = "Computer Science"
+
+# Updating an existing value
+student["age"] = 21
+
+# Multiple updates with update()
+student.update({"gpa": 3.8, "year": "Sophomore"})
+print(student)  
+# {'name': 'Alice', 'age': 21, 'major': 'Computer Science', 'gpa': 3.8, 'year': 'Sophomore'}
+```
+
+### Removing Items from Dictionaries
+
+There are several ways to remove items from a dictionary:
+
+```python
+student = {
+    "name": "Alice Smith",
+    "age": 20,
+    "major": "Computer Science",
+    "gpa": 3.8,
+    "year": "Sophomore"
+}
+
+# Remove a specific key-value pair and return the value
+age = student.pop("age")  # age = 20, key-value pair is removed
+
+# Remove and return the last inserted key-value pair
+last_item = student.popitem()  # ("year", "Sophomore") in Python 3.7+
+
+# Delete a key-value pair without returning anything
+del student["major"]
+
+# Clear all items from the dictionary
+student.clear()  # student is now {}
+```
+
+## Dictionary Operations
+
+### Checking if a Key Exists
+
+You can check if a dictionary contains a specific key using the `in` operator:
+
+```python
+student = {"name": "Alice", "age": 20, "major": "Computer Science"}
+
+has_name = "name" in student  # True
+has_gpa = "gpa" in student  # False
+
+# Check if a key doesn't exist
+missing_gpa = "gpa" not in student  # True
+```
+
+### Dictionary Methods
+
+Dictionaries come with several useful methods:
+
+```python
+student = {
+    "name": "Alice",
+    "age": 20,
+    "major": "Computer Science",
+    "gpa": 3.8
+}
+
+# Get all keys
+keys = student.keys()  # dict_keys(['name', 'age', 'major', 'gpa'])
+
+# Get all values
+values = student.values()  # dict_values(['Alice', 20, 'Computer Science', 3.8])
+
+# Get all key-value pairs as tuples
+items = student.items()  # dict_items([('name', 'Alice'), ('age', 20), ('major', 'Computer Science'), ('gpa', 3.8)])
+```
+
+Note that `keys()`, `values()`, and `items()` return special dictionary view objects, which:
+- Are dynamic (reflect changes to the dictionary)
+- Support iteration, membership testing, and length calculation
+- Can be converted to lists with `list()`
+
+```python
+# View objects are dynamic
+keys = student.keys()
+print(keys)  # dict_keys(['name', 'age', 'major', 'gpa'])
+student["year"] = "Sophomore"
+print(keys)  # dict_keys(['name', 'age', 'major', 'gpa', 'year'])
+
+# Convert to a list if you need a static snapshot
+keys_list = list(student.keys())
+```
+
+### Iterating Through Dictionaries
+
+There are several ways to iterate through dictionaries:
+
+```python
+student = {
+    "name": "Alice",
+    "age": 20,
+    "major": "Computer Science",
+    "gpa": 3.8
+}
+
+# Iterate over keys (default)
+for key in student:
+    print(key)
+
+# Explicitly iterate over keys
+for key in student.keys():
+    print(key)
+
+# Iterate over values
+for value in student.values():
+    print(value)
+
+# Iterate over key-value pairs
+for key, value in student.items():
+    print(f"{key}: {value}")
+```
+
+### Dictionary Comprehensions
+
+Dictionary comprehensions provide a concise way to create dictionaries:
+
+```python
+# Basic dictionary comprehension
+squares = {x: x**2 for x in range(1, 6)}
+# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# With conditions
+even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+# {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
+
+# From existing dictionaries
+prices = {"apple": 0.99, "banana": 0.59, "orange": 0.79}
+discounted = {fruit: price * 0.8 for fruit, price in prices.items()}
+# {'apple': 0.792, 'banana': 0.472, 'orange': 0.632}
+
+# From other iterables
+fruits = ["apple", "banana", "orange"]
+prices = [0.99, 0.59, 0.79]
+fruit_prices = {fruit: price for fruit, price in zip(fruits, prices)}
+# {'apple': 0.99, 'banana': 0.59, 'orange': 0.79}
+```
+
+## Advanced Dictionary Techniques
+
+### Nested Dictionaries
+
+Dictionaries can contain other dictionaries as values, allowing you to create complex, nested data structures:
+
+```python
+# Nested dictionary
+employee = {
+    "name": "Alice Johnson",
+    "position": "Senior Developer",
+    "contact": {
+        "email": "alice@example.com",
+        "phone": "555-1234",
+        "address": {
+            "street": "123 Main St",
+            "city": "Boston",
+            "state": "MA",
+            "zip": "02108"
+        }
+    },
+    "skills": ["Python", "JavaScript", "SQL"],
+    "projects": [
+        {"name": "Website Redesign", "status": "Completed"},
+        {"name": "Database Migration", "status": "In Progress"}
+    ]
+}
+
+# Accessing nested values
+email = employee["contact"]["email"]  # "alice@example.com"
+city = employee["contact"]["address"]["city"]  # "Boston"
+first_project = employee["projects"][0]["name"]  # "Website Redesign"
+
+# Safely accessing deeply nested values with get()
+mobile = employee.get("contact", {}).get("mobile")  # None
+```
+
+### Default Values with `defaultdict`
+
+The `collections` module provides `defaultdict`, a dictionary subclass that calls a factory function to provide default values for missing keys:
+
+```python
+from collections import defaultdict
+
+# defaultdict with list as the default factory
+word_counts = defaultdict(int)
+for word in "the quick brown fox jumps over the lazy dog".split():
+    word_counts[word] += 1
+
+print(word_counts)
+# defaultdict(<class 'int'>, {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1})
+
+# defaultdict with list as the default factory
+fruit_categories = defaultdict(list)
+fruits = [("apple", "red"), ("banana", "yellow"), ("apple", "green"), ("orange", "orange")]
+for fruit, color in fruits:
+    fruit_categories[fruit].append(color)
+
+print(fruit_categories)
+# defaultdict(<class 'list'>, {'apple': ['red', 'green'], 'banana': ['yellow'], 'orange': ['orange']})
+```
+
+### Ordered Dictionaries with `OrderedDict`
+
+Before Python 3.7, dictionaries didn't guarantee key order. `OrderedDict` from the `collections` module maintains keys in the order they were inserted:
+
+```python
+from collections import OrderedDict
+
+# Create an OrderedDict
+ordered = OrderedDict([
+    ("first", 1),
+    ("second", 2),
+    ("third", 3)
+])
+
+# Keys are returned in insertion order
+print(list(ordered.keys()))  # ['first', 'second', 'third']
+
+# Regular dictionaries also maintain order in Python 3.7+
+regular = {"first": 1, "second": 2, "third": 3}
+print(list(regular.keys()))  # ['first', 'second', 'third']
+
+# The main advantage of OrderedDict is that it treats order as significant for equality comparison
+# Two OrderedDicts with the same items but different order are NOT equal
+```
+
+**Note:** As of Python 3.7, regular dictionaries maintain insertion order as a language feature. However, `OrderedDict` still has some advantages, such as considering order in equality comparisons and having special methods like `move_to_end()`.
+
+### Counter Dictionaries
+
+The `collections` module also provides `Counter`, a dictionary subclass for counting hashable objects:
+
+```python
+from collections import Counter
+
+# Count occurrences of elements
+colors = ["red", "blue", "red", "green", "blue", "blue"]
+color_count = Counter(colors)
+print(color_count)  # Counter({'blue': 3, 'red': 2, 'green': 1})
+
+# Count words in a text
+text = "the quick brown fox jumps over the lazy dog"
+word_count = Counter(text.split())
+print(word_count)  # Counter({'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1})
+
+# Most common elements
+print(word_count.most_common(2))  # [('the', 2), ('quick', 1)]
+
+# Update the counter
+word_count.update(["fox", "fox", "dog"])
+print(word_count)  # Counter({'fox': 3, 'the': 2, 'dog': 2, 'quick': 1, 'brown': 1, 'jumps': 1, 'over': 1, 'lazy': 1})
+
+# Arithmetic operations
+counter1 = Counter(a=3, b=1)
+counter2 = Counter(a=1, b=2)
+print(counter1 + counter2)  # Counter({'a': 4, 'b': 3})
+print(counter1 - counter2)  # Counter({'a': 2})
+```
+
+### Memory-Efficient Dictionaries with `ChainMap`
+
+`ChainMap` from the `collections` module groups multiple dictionaries together to create a single view:
+
+```python
+from collections import ChainMap
+
+defaults = {"theme": "dark", "language": "en", "font_size": 12}
+user_settings = {"theme": "light"}
+
+# Instead of updating or merging dictionaries
+settings = ChainMap(user_settings, defaults)
+
+print(settings["theme"])  # "light" from user_settings
+print(settings["language"])  # "en" from defaults
+print(settings["font_size"])  # 12 from defaults
+
+# Changes to underlying dictionaries are reflected in the ChainMap
+user_settings["font_size"] = 14
+print(settings["font_size"])  # 14 from user_settings
+```
+
+## Dictionary Performance
+
+Dictionaries are designed for fast lookups, insertions, and deletions. When you need to associate values with keys and quickly retrieve them, dictionaries often provide the best performance:
+
+- Lookups by key are O(1) on average (constant time)
+- Insertions and deletions are also O(1) on average
+- This is much faster than searching in lists or tuples, especially as the collection grows
+
+However, dictionaries require more memory than lists or tuples to store the same data, due to the hash table implementation.
+
+## Common Dictionary Patterns
+
+### Merging Dictionaries
+
+In Python 3.9+, you can use the `|` operator to merge dictionaries:
+
+```python
+defaults = {"theme": "dark", "language": "en"}
+user_settings = {"theme": "light", "notifications": True}
+
+# Merge with | (Python 3.9+)
+settings = defaults | user_settings
+print(settings)  # {'theme': 'light', 'language': 'en', 'notifications': True}
+
+# In-place merge with |= (Python 3.9+)
+defaults |= user_settings
+print(defaults)  # {'theme': 'light', 'language': 'en', 'notifications': True}
+```
+
+For earlier Python versions, you can use the `update()` method or unpacking with `**`:
+
+```python
+# Using update()
+defaults = {"theme": "dark", "language": "en"}
+user_settings = {"theme": "light", "notifications": True}
+merged = defaults.copy()
+merged.update(user_settings)
+print(merged)  # {'theme': 'light', 'language': 'en', 'notifications': True}
+
+# Using dictionary unpacking
+merged = {**defaults, **user_settings}
+print(merged)  # {'theme': 'light', 'language': 'en', 'notifications': True}
+```
+
+### Grouping Data
+
+Dictionaries are perfect for grouping related data:
+
+```python
+# Group students by major
+students = [
+    {"name": "Alice", "major": "CS", "gpa": 3.8},
+    {"name": "Bob", "major": "Math", "gpa": 3.6},
+    {"name": "Charlie", "major": "CS", "gpa": 3.5},
+    {"name": "Diana", "major": "Biology", "gpa": 3.9}
+]
+
+by_major = {}
+for student in students:
+    major = student["major"]
+    if major not in by_major:
+        by_major[major] = []
+    by_major[major].append(student)
+
+print(by_major)
+# {'CS': [{'name': 'Alice', 'major': 'CS', 'gpa': 3.8}, {'name': 'Charlie', 'major': 'CS', 'gpa': 3.5}],
+#  'Math': [{'name': 'Bob', 'major': 'Math', 'gpa': 3.6}],
+#  'Biology': [{'name': 'Diana', 'major': 'Biology', 'gpa': 3.9}]}
+
+# More concisely with defaultdict
+from collections import defaultdict
+
+by_major = defaultdict(list)
+for student in students:
+    by_major[student["major"]].append(student)
+```
+
+### Caching and Memoization
+
+Dictionaries are excellent for caching function results to avoid redundant calculations:
+
+```python
+# Basic caching with a dictionary
+def fibonacci(n, cache={}):
+    if n in cache:
+        return cache[n]
+    if n <= 1:
+        result = n
+    else:
+        result = fibonacci(n-1) + fibonacci(n-2)
+    cache[n] = result
+    return result
+
+print(fibonacci(35))  # Fast because of caching
+```
+
+A more robust approach is to use the `@functools.lru_cache` decorator, which uses a dictionary-like structure internally:
+
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(35))  # Fast because of caching
+```
+
+### Dictionary as a Switch/Case Alternative
+
+Python doesn't have a built-in switch/case statement (prior to Python 3.10), but dictionaries offer an elegant alternative:
+
+```python
+def perform_operation(operation, a, b):
+    operations = {
+        'add': lambda x, y: x + y,
+        'subtract': lambda x, y: x - y,
+        'multiply': lambda x, y: x * y,
+        'divide': lambda x, y: x / y if y != 0 else "Error: Division by zero"
+    }
+    
+    # Get the function for the operation, or a default function
+    operation_function = operations.get(operation, lambda x, y: "Error: Invalid operation")
+    
+    # Call the function with the arguments
+    return operation_function(a, b)
+
+print(perform_operation('add', 5, 3))       # 8
+print(perform_operation('multiply', 5, 3))  # 15
+print(perform_operation('power', 5, 3))     # "Error: Invalid operation"
+```
+
+## Practice Exercises
+
+1. Create a function that merges two dictionaries. If both dictionaries have the same key, the value from the second dictionary should overwrite the value from the first.
+
+2. Write a function that inverts a dictionary, making the values the keys and the keys the values. Handle the case where multiple keys have the same value.
+
+3. Implement a word frequency counter that reads a text file and creates a dictionary where the keys are words and the values are the number of times each word appears in the file.
+
+4. Create a simple contact management system using dictionaries. The system should allow adding, removing, and searching for contacts.
+
+5. Implement a function that groups a list of dictionaries by a specified key. For example, grouping a list of student dictionaries by their major.
+
+6. Create a function that finds the most common word in a text, ignoring common stop words (like "the", "a", "an", etc.).
+
+7. Implement a simple cache decorator using dictionaries that stores the results of a function based on its arguments to avoid recalculation.
+
+## Summary
+
+Dictionaries are a fundamental data structure in Python, providing an efficient way to store and retrieve key-value pairs. Their ability to associate values with keys makes them ideal for a wide range of applications, from simple data storage to complex data transformations.
+
+Key points to remember:
+
+- Dictionaries store data as key-value pairs
+- Keys must be immutable and hashable (strings, numbers, tuples of immutable objects)
+- Values can be any Python object
+- Dictionary lookups, insertions, and deletions are very fast (O(1) average complexity)
+- Dictionaries maintain insertion order since Python 3.7
+- The `collections` module provides specialized dictionary variants (`defaultdict`, `OrderedDict`, `Counter`, `ChainMap`)
+- Dictionary comprehensions offer a concise way to create dictionaries
+- Dictionaries are perfect for tasks like counting, grouping, caching, and implementing lookup tables
+
+In the next section, we'll explore sets, another dictionary-based data structure that stores unique elements and supports powerful set operations. 

@@ -1,0 +1,532 @@
+---
+title: Lists and Tuples
+description: Master Python's sequence data types for storing and manipulating collections of items
+---
+
+# Lists and Tuples
+
+Python offers several built-in data structures for storing collections of data. In this section, we'll explore two of the most fundamental sequence types: lists and tuples. These versatile data structures are essential tools in a Python programmer's toolkit, each with its own strengths and use cases.
+
+## Lists
+
+Lists are ordered, mutable collections that can store items of different types. They're among the most frequently used data structures in Python due to their flexibility and wide range of operations.
+
+### Creating Lists
+
+There are several ways to create a list in Python:
+
+```python
+# Empty list
+empty_list = []
+empty_list_alternative = list()
+
+# List with initial values
+numbers = [1, 2, 3, 4, 5]
+mixed_list = [1, "hello", 3.14, True, None]
+
+# Creating a list from another iterable
+characters = list("Python")  # ['P', 'y', 't', 'h', 'o', 'n']
+numbers_copy = list(numbers)  # Creates a new list with the same elements
+
+# List of repeated elements
+zeros = [0] * 5  # [0, 0, 0, 0, 0]
+
+# List comprehension (we'll cover this in more detail later)
+squares = [x**2 for x in range(1, 6)]  # [1, 4, 9, 16, 25]
+```
+
+### Accessing List Elements
+
+You can access list elements using index notation, where indices start at 0:
+
+```python
+fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+
+# Accessing elements
+first_fruit = fruits[0]  # "apple"
+third_fruit = fruits[2]  # "cherry"
+
+# Negative indices count from the end
+last_fruit = fruits[-1]  # "elderberry"
+second_to_last = fruits[-2]  # "date"
+
+# Checking if an element exists in a list
+has_banana = "banana" in fruits  # True
+has_mango = "mango" in fruits  # False
+```
+
+### Slicing Lists
+
+Slicing allows you to extract portions of a list:
+
+```python
+fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+
+# Basic slicing: [start:stop]
+first_three = fruits[0:3]  # ["apple", "banana", "cherry"]
+# Shorthand for starting at index 0
+first_three_alt = fruits[:3]  # ["apple", "banana", "cherry"]
+
+# Slicing to the end
+last_three = fruits[2:]  # ["cherry", "date", "elderberry"]
+
+# Negative indices in slices
+last_two = fruits[-2:]  # ["date", "elderberry"]
+
+# Step parameter: [start:stop:step]
+every_other = fruits[::2]  # ["apple", "cherry", "elderberry"]
+
+# Negative step (reverses the list)
+reversed_list = fruits[::-1]  # ["elderberry", "date", "cherry", "banana", "apple"]
+```
+
+### Modifying Lists
+
+Lists are mutable, which means you can change their content after creation:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+# Changing a single element
+fruits[1] = "blueberry"  # ["apple", "blueberry", "cherry"]
+
+# Replacing a slice
+fruits[0:2] = ["apricot", "blackberry"]  # ["apricot", "blackberry", "cherry"]
+
+# The replacement doesn't need to be the same length
+fruits[0:2] = ["avocado", "boysenberry", "cranberry"]  # ["avocado", "boysenberry", "cranberry", "cherry"]
+fruits[0:3] = ["almond"]  # ["almond", "cherry"]
+```
+
+### Common List Methods
+
+Python lists come with built-in methods that allow you to modify and work with them:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+# Adding elements
+fruits.append("date")  # ["apple", "banana", "cherry", "date"]
+fruits.insert(1, "apricot")  # ["apple", "apricot", "banana", "cherry", "date"]
+fruits.extend(["fig", "grape"])  # ["apple", "apricot", "banana", "cherry", "date", "fig", "grape"]
+
+# Removing elements
+fruits.remove("banana")  # Removes the first occurrence: ["apple", "apricot", "cherry", "date", "fig", "grape"]
+popped = fruits.pop()  # Removes and returns the last element: "grape"
+popped_index = fruits.pop(1)  # Removes and returns element at index 1: "apricot"
+del fruits[0]  # Removes element at index 0, now: ["cherry", "date", "fig"]
+fruits.clear()  # Removes all elements: []
+
+# Finding elements
+fruits = ["apple", "banana", "cherry", "banana"]
+position = fruits.index("banana")  # Returns the first index where the element appears: 1
+count = fruits.count("banana")  # Counts occurrences: 2
+
+# Sorting and reversing
+numbers = [3, 1, 4, 1, 5, 9, 2]
+numbers.sort()  # In-place sorting: [1, 1, 2, 3, 4, 5, 9]
+numbers.sort(reverse=True)  # Reverse sort: [9, 5, 4, 3, 2, 1, 1]
+numbers.reverse()  # Reverses the list in-place: [1, 1, 2, 3, 4, 5, 9]
+
+# Creating sorted copies without modifying the original
+original = [3, 1, 4, 1, 5, 9, 2]
+sorted_copy = sorted(original)  # [1, 1, 2, 3, 4, 5, 9]
+reversed_copy = list(reversed(original))  # Not built-in to list, but creates a reversed copy
+```
+
+### List Aliasing and Copying
+
+When you assign a list to a new variable, Python doesn't create a new list. Instead, it creates a new reference to the same list:
+
+```python
+original = [1, 2, 3]
+alias = original  # Both variables reference the same list
+
+alias[0] = 100  # Changes both 'alias' and 'original': [100, 2, 3]
+print(original)  # Output: [100, 2, 3]
+```
+
+If you want to create a separate copy, you have several options:
+
+```python
+original = [1, 2, 3]
+
+# Using the list constructor
+copy1 = list(original)
+
+# Using slicing
+copy2 = original[:]
+
+# Using the copy method
+copy3 = original.copy()
+
+# All these create separate copies
+copy1[0] = 100  # Only changes copy1, not original
+print(original)  # Output: [1, 2, 3]
+print(copy1)  # Output: [100, 2, 3]
+```
+
+For nested lists (lists containing other lists), the above methods create a "shallow copy" — the outer list is copied, but inner lists are still shared:
+
+```python
+nested = [[1, 2], [3, 4]]
+shallow_copy = nested.copy()
+
+shallow_copy[0][0] = 100  # Changes both shallow_copy and nested
+print(nested)  # Output: [[100, 2], [3, 4]]
+
+# For a deep copy (copy all nested objects too), use the copy module
+import copy
+deep_copy = copy.deepcopy(nested)
+deep_copy[1][0] = 200  # Only changes deep_copy, not nested
+print(nested)  # Output: [[100, 2], [3, 4]]
+print(deep_copy)  # Output: [[100, 2], [200, 4]]
+```
+
+### Nested Lists
+
+Lists can contain other lists, allowing you to create multi-dimensional data structures:
+
+```python
+# A 2D list (matrix)
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+# Accessing elements
+element = matrix[1][2]  # Row 1, Column 2: 6
+
+# Modifying elements
+matrix[0][1] = 20  # Changes the element in Row 0, Column 1
+
+# Adding a row
+matrix.append([10, 11, 12])
+
+# Iterating over a 2D list
+for row in matrix:
+    for element in row:
+        print(element, end=" ")
+    print()  # New line after each row
+```
+
+## Tuples
+
+Tuples are ordered, immutable sequences, similar to lists but with a key difference: once created, they cannot be modified. This immutability makes tuples more efficient than lists in certain scenarios and allows them to be used as dictionary keys or elements in sets.
+
+### Creating Tuples
+
+There are several ways to create a tuple:
+
+```python
+# Empty tuple
+empty_tuple = ()
+empty_tuple_alternative = tuple()
+
+# Tuple with elements
+numbers = (1, 2, 3, 4, 5)
+mixed_tuple = (1, "hello", 3.14, True)
+
+# Note: For a single-element tuple, a trailing comma is required
+single_element = (42,)  # Without the comma, this would be an integer in parentheses
+not_a_tuple = (42)  # This is just an integer (42), not a tuple
+
+# Creating a tuple from an iterable
+characters = tuple("Python")  # ('P', 'y', 't', 'h', 'o', 'n')
+list_to_tuple = tuple([1, 2, 3])  # (1, 2, 3)
+
+# Tuple packing - parentheses are optional
+packed_tuple = 1, 2, 3, 4  # (1, 2, 3, 4)
+```
+
+### Accessing Tuple Elements
+
+You access tuple elements the same way as list elements:
+
+```python
+colors = ("red", "green", "blue", "yellow", "purple")
+
+# Indexing
+first_color = colors[0]  # "red"
+last_color = colors[-1]  # "purple"
+
+# Slicing
+first_three = colors[:3]  # ("red", "green", "blue")
+last_two = colors[-2:]  # ("yellow", "purple")
+
+# Checking if an element exists
+has_green = "green" in colors  # True
+has_black = "black" in colors  # False
+```
+
+### Tuple Immutability
+
+The key difference between lists and tuples is that tuples cannot be modified after creation:
+
+```python
+colors = ("red", "green", "blue")
+
+# The following operations would raise a TypeError:
+# colors[0] = "yellow"  # TypeError: 'tuple' object does not support item assignment
+# colors.append("purple")  # AttributeError: 'tuple' object has no attribute 'append'
+# colors.remove("green")  # AttributeError: 'tuple' object has no attribute 'remove'
+
+# However, you can create a new tuple based on the existing one
+new_colors = colors + ("yellow", "purple")  # ("red", "green", "blue", "yellow", "purple")
+colors_subset = colors[1:3]  # ("green", "blue")
+```
+
+### Tuple Methods
+
+Tuples have fewer methods than lists due to their immutability:
+
+```python
+colors = ("red", "green", "blue", "green", "yellow")
+
+# Finding elements
+position = colors.index("green")  # Returns the first index: 1
+count = colors.count("green")  # Counts occurrences: 2
+```
+
+### Tuple Packing and Unpacking
+
+Tuple packing is the process of putting values into a tuple, while unpacking extracts the values from a tuple into individual variables:
+
+```python
+# Packing
+coordinates = 3, 4
+
+# Unpacking
+x, y = coordinates  # x = 3, y = 4
+
+# Unpacking with multiple values
+person = ("John", "Doe", 30, "Software Engineer")
+first_name, last_name, age, occupation = person
+
+# Using _ for values you want to ignore
+name, _, age, _ = person  # Only keep the name and age
+
+# Unpacking with * for collecting multiple elements
+first, *middle, last = (1, 2, 3, 4, 5)  # first = 1, middle = [2, 3, 4], last = 5
+```
+
+Tuple unpacking is particularly useful for swapping variables without a temporary variable:
+
+```python
+a = 5
+b = 10
+a, b = b, a  # Now a = 10, b = 5
+```
+
+### Nested Tuples
+
+Like lists, tuples can be nested:
+
+```python
+nested_tuple = ((1, 2), (3, 4), (5, 6))
+element = nested_tuple[1][0]  # 3
+
+# Tuples can contain mutable objects like lists
+mixed_nested = (1, [2, 3], (4, 5))
+# The tuple itself can't be modified, but the mutable objects within it can be
+mixed_nested[1].append(4)  # Now: (1, [2, 3, 4], (4, 5))
+```
+
+## When to Use Lists vs. Tuples
+
+Understanding when to use lists versus tuples can help you write more efficient and clearer code:
+
+### Use Lists When:
+
+- You need a collection that might change (add, remove, or modify elements)
+- You're dealing with a homogeneous collection of items that are functionally interchangeable
+- You need in-place sorting or frequent modifications
+- You're representing a dynamic collection (e.g., a shopping cart, a list of active users)
+
+### Use Tuples When:
+
+- You need an immutable sequence (that cannot be accidentally modified)
+- You're representing a collection of heterogeneous data with a specific structure and meaning for each position (e.g., a database record, a point in 3D space)
+- You want to use the collection as a dictionary key or a set element (which require immutable objects)
+- You're passing data that shouldn't be modified to a function
+- You're returning multiple values from a function
+
+Here are some examples to illustrate these choices:
+
+```python
+# Use a list for a collection of items that might change
+shopping_cart = ["apples", "bananas", "cherries"]
+shopping_cart.append("dates")  # Adding an item
+
+# Use a tuple for a fixed structure where each position has meaning
+person = ("John", "Doe", 30)  # (first_name, last_name, age)
+
+# Use a tuple as a dictionary key (lists cannot be used as keys)
+locations = {
+    (40.7128, -74.0060): "New York",
+    (34.0522, -118.2437): "Los Angeles",
+    (51.5074, -0.1278): "London"
+}
+
+# Use a tuple to return multiple values from a function
+def get_user_info():
+    # ... (code to fetch user info)
+    return "john_doe", "John Doe", "john@example.com"
+
+username, full_name, email = get_user_info()
+```
+
+## Named Tuples
+
+When working with tuples representing structured data, it can be hard to remember which index corresponds to which field. Python's `collections` module provides `namedtuple`, which lets you create tuple subclasses with named fields:
+
+```python
+from collections import namedtuple
+
+# Define a named tuple type
+Person = namedtuple('Person', ['name', 'age', 'occupation'])
+
+# Create an instance
+john = Person("John Doe", 30, "Software Engineer")
+
+# Access fields by name instead of index
+print(john.name)        # "John Doe"
+print(john.age)         # 30
+print(john.occupation)  # "Software Engineer"
+
+# Named tuples are still tuples, so indexing works too
+print(john[0])  # "John Doe"
+
+# Unpacking works as well
+name, age, job = john
+```
+
+Named tuples offer a lightweight alternative to full classes when you just need an immutable container with named fields.
+
+## Performance Considerations
+
+Tuples generally have a slightly faster performance than lists due to their immutability:
+
+- Creating and accessing elements in tuples is slightly faster than in lists
+- Tuples use less memory than lists
+- Tuples cannot grow or shrink, so Python can optimize their storage
+
+However, these performance differences are usually negligible for most applications. Choose between lists and tuples based on whether you need mutability or immutability, not on minor performance differences.
+
+## Common Patterns and Idioms
+
+### Using Lists as Stacks and Queues
+
+A list can be used as a stack (last-in, first-out) using `append()` and `pop()`:
+
+```python
+stack = []
+stack.append(1)  # [1]
+stack.append(2)  # [1, 2]
+stack.append(3)  # [1, 2, 3]
+stack.pop()      # 3, stack is now [1, 2]
+stack.pop()      # 2, stack is now [1]
+```
+
+For a queue (first-in, first-out), you can use `append()` and `pop(0)`, but this is inefficient for large collections because `pop(0)` has to shift all remaining elements. For efficient queues, use `collections.deque`:
+
+```python
+from collections import deque
+queue = deque()
+queue.append(1)    # deque([1])
+queue.append(2)    # deque([1, 2])
+queue.append(3)    # deque([1, 2, 3])
+queue.popleft()    # 1, queue is now deque([2, 3])
+queue.popleft()    # 2, queue is now deque([3])
+```
+
+### Looping Through Sequences
+
+When looping through a sequence, you often need both the index and the value. Instead of using an index counter, use `enumerate()`:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+# Without enumerate (less Pythonic)
+for i in range(len(fruits)):
+    print(f"{i}: {fruits[i]}")
+
+# With enumerate (more Pythonic)
+for i, fruit in enumerate(fruits):
+    print(f"{i}: {fruit}")
+
+# You can also specify the starting index
+for i, fruit in enumerate(fruits, start=1):
+    print(f"{i}: {fruit}")  # 1-indexed
+```
+
+### Zipping Sequences Together
+
+When you need to work with multiple sequences in parallel, use the `zip()` function:
+
+```python
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+occupations = ["Engineer", "Designer", "Doctor"]
+
+# Iterate over multiple sequences simultaneously
+for name, age, occupation in zip(names, ages, occupations):
+    print(f"{name} is {age} years old and works as a {occupation}")
+
+# Create a list of tuples
+people = list(zip(names, ages, occupations))
+# [('Alice', 25, 'Engineer'), ('Bob', 30, 'Designer'), ('Charlie', 35, 'Doctor')]
+
+# Unzip a list of tuples
+names_new, ages_new, occupations_new = zip(*people)
+```
+
+### Filtering and Transforming
+
+Lists and tuples can be filtered and transformed using list comprehensions, which we'll cover in detail in a later section. Here's a preview:
+
+```python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Filtering (even numbers only)
+even_numbers = [x for x in numbers if x % 2 == 0]  # [2, 4, 6, 8, 10]
+
+# Transforming (squaring each number)
+squared = [x**2 for x in numbers]  # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# Filtering and transforming (square of even numbers)
+even_squared = [x**2 for x in numbers if x % 2 == 0]  # [4, 16, 36, 64, 100]
+```
+
+## Practice Exercises
+
+1. Write a function that takes two lists and returns a new list containing elements that appear in both lists (the intersection).
+
+2. Implement a function that flattens a nested list of any depth into a single-level list.
+
+3. Create a function that takes a list of numbers and returns a tuple containing the minimum, maximum, and average of the numbers.
+
+4. Write a function that rotates a list by k elements. For example, if the list is [1, 2, 3, 4, 5] and k is 2, the result should be [4, 5, 1, 2, 3].
+
+5. Implement a function that checks whether a list or tuple is a palindrome (reads the same forwards and backwards).
+
+6. Create a function that takes a tuple representing a person (name, age, occupation) and returns a formatted string describing the person.
+
+7. Implement a function that takes a list of tuples, each representing a point in 2D space (x, y), and returns the distance between the two closest points.
+
+## Summary
+
+Lists and tuples are fundamental sequence types in Python that allow you to work with collections of data. While they share many similarities, the key difference is that lists are mutable (can be changed after creation), while tuples are immutable (cannot be changed after creation).
+
+Key points to remember:
+
+- Use lists when you need a collection that can change
+- Use tuples for immutable collections or when each position has a specific meaning
+- Lists offer more methods for in-place modification
+- Tuples can be used as dictionary keys and are slightly more memory-efficient
+- Both support indexing, slicing, nesting, and iteration
+- Named tuples provide a convenient way to work with structured data
+- Python offers powerful idioms like `enumerate()` and `zip()` for working with sequences
+
+In the next section, we'll dive into dictionaries, another powerful data structure for mapping keys to values. 

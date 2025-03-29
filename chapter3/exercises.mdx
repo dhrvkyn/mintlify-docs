@@ -1,0 +1,509 @@
+---
+title: Practical Exercises
+description: Apply your knowledge of control flow and loops with these practical examples
+---
+
+# Practical Exercises
+
+In this section, we'll work through several practical examples that demonstrate how to apply the control flow and looping concepts we've learned. Each example includes a problem statement, solution, and explanation to help you understand the thought process.
+
+## Example 1: Temperature Converter
+
+**Problem:** Create a program that converts temperatures between Fahrenheit and Celsius. The program should ask the user which conversion they want to perform, then prompt for the temperature value.
+
+**Solution:**
+
+```python
+def fahrenheit_to_celsius(fahrenheit):
+    """Convert Fahrenheit to Celsius."""
+    return (fahrenheit - 32) * 5/9
+
+def celsius_to_fahrenheit(celsius):
+    """Convert Celsius to Fahrenheit."""
+    return celsius * 9/5 + 32
+
+# Get user input
+print("Temperature Converter")
+print("1. Fahrenheit to Celsius")
+print("2. Celsius to Fahrenheit")
+
+choice = input("Enter your choice (1 or 2): ")
+
+if choice == "1":
+    temp = float(input("Enter temperature in Fahrenheit: "))
+    converted = fahrenheit_to_celsius(temp)
+    print(f"{temp}°F is equal to {converted:.2f}°C")
+elif choice == "2":
+    temp = float(input("Enter temperature in Celsius: "))
+    converted = celsius_to_fahrenheit(temp)
+    print(f"{temp}°C is equal to {converted:.2f}°F")
+else:
+    print("Invalid choice. Please enter 1 or 2.")
+```
+
+**Explanation:**
+- We define two conversion functions
+- We use an `if-elif-else` structure to handle the user's choice
+- We apply formatting in the output string using f-strings with the `:.2f` format specifier to display the result with 2 decimal places
+
+## Example 2: Number Guessing Game
+
+**Problem:** Create a simple number guessing game where the program selects a random number between 1 and 100, and the user tries to guess it. The program should provide feedback ("too high" or "too low") after each guess.
+
+**Solution:**
+
+```python
+import random
+
+# Generate a random number between 1 and 100
+secret_number = random.randint(1, 100)
+attempts = 0
+max_attempts = 10
+
+print("Welcome to the Number Guessing Game!")
+print(f"I'm thinking of a number between 1 and 100. You have {max_attempts} attempts.")
+
+while attempts < max_attempts:
+    # Get user's guess
+    try:
+        guess = int(input("Enter your guess: "))
+    except ValueError:
+        print("Please enter a valid number.")
+        continue
+    
+    attempts += 1
+    
+    # Check the guess
+    if guess < secret_number:
+        print("Too low!")
+    elif guess > secret_number:
+        print("Too high!")
+    else:
+        print(f"Congratulations! You guessed the number in {attempts} attempts!")
+        break
+    
+    # Inform user of remaining attempts
+    remaining = max_attempts - attempts
+    if remaining > 0:
+        print(f"You have {remaining} attempts left.")
+else:
+    print(f"Sorry, you've run out of attempts. The number was {secret_number}.")
+```
+
+**Explanation:**
+- We use the `random` module to generate a secret number
+- We use a `while` loop to allow multiple guesses
+- We use a `try-except` block to handle invalid inputs
+- We use an `if-elif-else` structure to provide feedback based on the guess
+- We use the `else` clause with the `while` loop to handle the case when the player runs out of attempts
+
+## Example 3: Basic Calculator
+
+**Problem:** Create a simple calculator that can perform addition, subtraction, multiplication, and division. The program should repeatedly ask for operations until the user decides to quit.
+
+**Solution:**
+
+```python
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+def multiply(x, y):
+    return x * y
+
+def divide(x, y):
+    if y == 0:
+        return "Error: Division by zero"
+    return x / y
+
+while True:
+    print("\nCalculator Menu:")
+    print("1. Add")
+    print("2. Subtract")
+    print("3. Multiply")
+    print("4. Divide")
+    print("5. Quit")
+    
+    choice = input("Enter your choice (1-5): ")
+    
+    if choice == '5':
+        print("Thank you for using the calculator. Goodbye!")
+        break
+    
+    if choice not in ['1', '2', '3', '4']:
+        print("Invalid choice. Please enter a number between 1 and 5.")
+        continue
+    
+    try:
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+    except ValueError:
+        print("Error: Please enter valid numbers.")
+        continue
+    
+    if choice == '1':
+        print(f"Result: {add(num1, num2)}")
+    elif choice == '2':
+        print(f"Result: {subtract(num1, num2)}")
+    elif choice == '3':
+        print(f"Result: {multiply(num1, num2)}")
+    elif choice == '4':
+        result = divide(num1, num2)
+        print(f"Result: {result}")
+```
+
+**Explanation:**
+- We define functions for each operation
+- We use an infinite `while` loop with a `break` statement to allow multiple calculations
+- We use `if-elif-else` to handle different operation choices
+- We use a `try-except` block to handle invalid numeric inputs
+- We use `continue` to skip the rest of the loop iteration if there's an error
+
+## Example 4: Prime Number Finder
+
+**Problem:** Write a program that finds all prime numbers up to a specified limit. A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
+
+**Solution:**
+
+```python
+def is_prime(num):
+    """Check if a number is prime."""
+    if num <= 1:
+        return False
+    if num <= 3:
+        return True
+    if num % 2 == 0 or num % 3 == 0:
+        return False
+    
+    # Check for divisibility by numbers of form 6k±1
+    i = 5
+    while i * i <= num:
+        if num % i == 0 or num % (i + 2) == 0:
+            return False
+        i += 6
+    
+    return True
+
+def find_primes_up_to(limit):
+    """Find all prime numbers up to the specified limit."""
+    primes = []
+    for num in range(2, limit + 1):
+        if is_prime(num):
+            primes.append(num)
+    return primes
+
+# Get user input
+try:
+    limit = int(input("Find all prime numbers up to: "))
+    if limit < 2:
+        print("Please enter a number greater than or equal to 2.")
+    else:
+        primes = find_primes_up_to(limit)
+        print(f"Prime numbers up to {limit}:")
+        print(primes)
+        print(f"Found {len(primes)} prime numbers.")
+except ValueError:
+    print("Please enter a valid number.")
+```
+
+**Explanation:**
+- We define an `is_prime()` function using an efficient algorithm
+- We use a `for` loop to check all numbers up to the limit
+- We use an early return pattern in `is_prime()` to improve efficiency
+- We handle invalid inputs with a `try-except` block
+
+## Example 5: Word Counter
+
+**Problem:** Create a program that reads a text file and counts the number of lines, words, and characters in it. The file name should be provided by the user.
+
+**Solution:**
+
+```python
+def count_file_stats(filename):
+    """Count the number of lines, words, and characters in a file."""
+    try:
+        with open(filename, 'r', encoding='utf-8') as file:
+            lines = 0
+            words = 0
+            chars = 0
+            
+            for line in file:
+                lines += 1
+                chars += len(line)
+                words += len(line.split())
+            
+            return lines, words, chars
+    except FileNotFoundError:
+        return None
+
+# Get user input
+filename = input("Enter the name of the file to analyze: ")
+result = count_file_stats(filename)
+
+if result is None:
+    print(f"Error: The file '{filename}' was not found.")
+else:
+    lines, words, chars = result
+    print(f"File: {filename}")
+    print(f"Lines: {lines}")
+    print(f"Words: {words}")
+    print(f"Characters: {chars}")
+```
+
+**Explanation:**
+- We define a function that takes a filename and returns statistics
+- We use a `with` statement to ensure the file is properly closed
+- We use a `for` loop to process each line in the file
+- We handle the case where the file doesn't exist with a `try-except` block
+
+## Example 6: Shopping List Manager
+
+**Problem:** Create a simple shopping list program that allows users to add items, remove items, view the list, and clear the list. The program should run in a loop until the user decides to quit.
+
+**Solution:**
+
+```python
+def print_list(shopping_list):
+    """Print the shopping list with numbers."""
+    if not shopping_list:
+        print("Your shopping list is empty.")
+    else:
+        print("\nYour shopping list:")
+        for i, item in enumerate(shopping_list, 1):
+            print(f"{i}. {item}")
+
+def add_item(shopping_list):
+    """Add an item to the shopping list."""
+    item = input("Enter the item to add: ")
+    if item:
+        shopping_list.append(item)
+        print(f"'{item}' has been added to your list.")
+    else:
+        print("Item name cannot be empty.")
+
+def remove_item(shopping_list):
+    """Remove an item from the shopping list."""
+    if not shopping_list:
+        print("Your shopping list is already empty.")
+        return
+    
+    print_list(shopping_list)
+    try:
+        index = int(input("Enter the number of the item to remove: ")) - 1
+        if 0 <= index < len(shopping_list):
+            removed = shopping_list.pop(index)
+            print(f"'{removed}' has been removed from your list.")
+        else:
+            print("Invalid item number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+def main():
+    shopping_list = []
+    
+    while True:
+        print("\nShopping List Manager:")
+        print("1. View your list")
+        print("2. Add an item")
+        print("3. Remove an item")
+        print("4. Clear the list")
+        print("5. Exit")
+        
+        choice = input("Enter your choice (1-5): ")
+        
+        if choice == '1':
+            print_list(shopping_list)
+        elif choice == '2':
+            add_item(shopping_list)
+        elif choice == '3':
+            remove_item(shopping_list)
+        elif choice == '4':
+            shopping_list.clear()
+            print("Your shopping list has been cleared.")
+        elif choice == '5':
+            print("Thank you for using the Shopping List Manager. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Explanation:**
+- We define functions for each operation
+- We use an infinite loop with a menu system for user interaction
+- We use `enumerate()` to display numbered items
+- We use functions to organize the code and make it more readable
+- We use `if-elif-else` to handle the different menu options
+
+## Example 7: Data Analysis
+
+**Problem:** Write a program that analyzes a list of numbers, calculating the minimum, maximum, sum, and average. Then, categorize each number as below average, average, or above average.
+
+**Solution:**
+
+```python
+def analyze_data(numbers):
+    """Analyze a list of numbers and return statistics."""
+    if not numbers:
+        return None
+    
+    min_val = min(numbers)
+    max_val = max(numbers)
+    total = sum(numbers)
+    average = total / len(numbers)
+    
+    categories = {
+        "below_average": [],
+        "average": [],
+        "above_average": []
+    }
+    
+    # Using a small epsilon for floating-point comparison
+    epsilon = 1e-10
+    
+    for num in numbers:
+        if abs(num - average) < epsilon:
+            categories["average"].append(num)
+        elif num < average:
+            categories["below_average"].append(num)
+        else:
+            categories["above_average"].append(num)
+    
+    return {
+        "minimum": min_val,
+        "maximum": max_val,
+        "sum": total,
+        "average": average,
+        "categories": categories
+    }
+
+# Example usage
+data = [12, 5, 8, 15, 10, 7, 9, 20, 3, 14]
+analysis = analyze_data(data)
+
+if analysis:
+    print(f"Data: {data}")
+    print(f"Minimum: {analysis['minimum']}")
+    print(f"Maximum: {analysis['maximum']}")
+    print(f"Sum: {analysis['sum']}")
+    print(f"Average: {analysis['average']:.2f}")
+    print("\nCategorization:")
+    print(f"Below average: {analysis['categories']['below_average']}")
+    print(f"Average: {analysis['categories']['average']}")
+    print(f"Above average: {analysis['categories']['above_average']}")
+else:
+    print("No data to analyze.")
+```
+
+**Explanation:**
+- We define a function that takes a list of numbers and returns a dictionary of statistics
+- We use built-in functions `min()`, `max()`, and `sum()` for efficiency
+- We use a `for` loop to categorize the numbers
+- We handle the case of an empty list
+- We use an epsilon value for floating-point comparison to account for precision issues
+
+## Example 8: Password Validator
+
+**Problem:** Create a function that validates a password based on the following criteria:
+- At least 8 characters long
+- Contains at least one uppercase letter
+- Contains at least one lowercase letter
+- Contains at least one digit
+- Contains at least one special character (!@#$%^&*()_+-=)
+
+**Solution:**
+
+```python
+def validate_password(password):
+    """
+    Validate a password based on several criteria.
+    Returns a tuple (is_valid, error_message).
+    """
+    if len(password) < 8:
+        return False, "Password must be at least 8 characters long"
+    
+    has_uppercase = False
+    has_lowercase = False
+    has_digit = False
+    has_special = False
+    special_chars = "!@#$%^&*()_+-="
+    
+    for char in password:
+        if char.isupper():
+            has_uppercase = True
+        elif char.islower():
+            has_lowercase = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    
+    if not has_uppercase:
+        return False, "Password must contain at least one uppercase letter"
+    
+    if not has_lowercase:
+        return False, "Password must contain at least one lowercase letter"
+    
+    if not has_digit:
+        return False, "Password must contain at least one digit"
+    
+    if not has_special:
+        return False, "Password must contain at least one special character (!@#$%^&*()_+-=)"
+    
+    return True, "Password is valid"
+
+# Example usage
+passwords = [
+    "abc123",                 # Too short
+    "PASSWORD123!",           # No lowercase
+    "password123!",           # No uppercase
+    "Password!",              # No digit
+    "Password123",            # No special character
+    "Password123!"            # Valid
+]
+
+for pwd in passwords:
+    is_valid, message = validate_password(pwd)
+    print(f"Password: {pwd}")
+    print(f"Result: {'Valid' if is_valid else 'Invalid'}")
+    print(f"Message: {message}\n")
+```
+
+**Explanation:**
+- We define a function that takes a password and returns a tuple with validation result
+- We use flag variables to track different criteria
+- We use a single loop to check all characters, which is more efficient than multiple checks
+- We provide specific error messages for each validation failure
+- We test the function with a variety of passwords to demonstrate different cases
+
+## Practice on Your Own
+
+Now that you've seen several examples, try these exercises on your own:
+
+1. **Palindrome Checker**: Write a function that checks if a string is a palindrome (reads the same backward as forward).
+
+2. **Simple To-Do List**: Create a program that allows users to add, remove, and view tasks in a to-do list.
+
+3. **Number Classifier**: Write a program that takes a list of integers and separates them into categories (even, odd, positive, negative).
+
+4. **ASCII Art Generator**: Create a program that generates simple ASCII art patterns based on user input.
+
+5. **Contact Manager**: Implement a simple contact manager that allows users to add, search, and delete contacts.
+
+6. **Tic-Tac-Toe Game**: Create a simple two-player Tic-Tac-Toe game.
+
+7. **Word Frequency Counter**: Write a program that counts the frequency of each word in a text file.
+
+8. **Simple Calendar**: Create a program that displays a calendar for a specified month and year.
+
+By working through these exercises, you'll gain practical experience with conditional statements and loops, reinforcing the concepts we've covered in this chapter.
+
+## Next Steps
+
+In this chapter, we've explored conditional statements, looping constructs, and various techniques for controlling program flow. These are fundamental building blocks for writing Python programs.
+
+In the next chapter, we'll dive into Python's powerful data structures, learning how to effectively work with lists, tuples, dictionaries, and sets. These tools will allow you to organize and manipulate data in more sophisticated ways. 
